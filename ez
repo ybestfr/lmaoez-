@@ -33,7 +33,7 @@ getgenv().placeany = true
 local Units = {}
 
 local function loadUnit()
-    repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("collection"):FindFirstChild("grid"):FindFirstChild("List"):FindFirstChild("Outer"):FindFirstChild("UnitFrames")
+    repeat task.wait() until game.Players.LocalPlayer.PlayerGui:WaitForChild("collection"):WaitForChild("grid"):WaitForChild("List"):WaitForChild("Outer"):WaitForChild("UnitFrames")
     task.wait(2)
     table.clear(Units)
     for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
