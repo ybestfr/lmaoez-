@@ -767,7 +767,7 @@ function leave()
     end)
 end
 
-getgenv().checkportalown = false
+getgenv().checkportalown = true
 
 local ids = {}
 
@@ -861,7 +861,7 @@ function PortalW()
                 end
                 while getgenv().checkportalown == true do 
                     if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
-                        task.wait(3)
+                        task.wait(1)
                         getgenv().checkportalown = false
                         getgenv().portalown = false
                     end
