@@ -859,14 +859,8 @@ function PortalW()
                         end
                     end
                 end
-                while getgenv().checkportalown == true do 
-                    if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
-                        task.wait(1)
-                        getgenv().checkportalown = false
-                        getgenv().portalown = false
-                    end
-                end
             end
+            task.wait(60)
         end
     end)
 end
