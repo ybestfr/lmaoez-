@@ -3152,26 +3152,11 @@ local Keybind = Tab:CreateKeybind({
 
  local Section = Tab:CreateSection("Game Modifications")
 
- function Popup()
-    Window:Prompt({
-        Title = 'Warning',
-        SubTitle = 'Warning!',
-        Content = 'This Will Cancel Lag Just Click The Cancel Button Below\nDO NOT CLICK THE BUTTON THAT STARTS WITH "I UNDERSTAND" IF YOU WANT TO CANCEL',
-        Actions = {
-            Accept = {
-                Name = 'Cancel',
-                Callback = function()
-                end,
-            }
-        }
-    })
- end
-
  function Popup2()
     Window:Prompt({
         Title = 'Warning',
         SubTitle = 'Warning!',
-        Content = 'This Will Cause Your Game To Lag And You Might Crash\n If You Wish To Not Lag The Game Click The Button Below Cancel Lag Button Below',
+        Content = 'This Will Cause Your Game To Lag And You Might Crash\n If You Wish To Not Lag The Game Then Click Cancel Lag Button Below',
         Actions = {
             Accept = {
                 Name = 'I Understand That I Might Crash',
@@ -3224,6 +3209,18 @@ local Keybind = Tab:CreateKeybind({
             }
         }
     })
+    Window:Prompt({
+        Title = 'Warning',
+        SubTitle = 'Warning!',
+        Content = 'This Will Cause Your Game To Lag\nYou Might Crash!\n If You Wish To Not Lag The Game Then\nClick Cancel Lag Button Below',
+        Actions = {
+            Accept = {
+                Name = 'Cancel',
+                Callback = function()
+                end,
+            }
+        }
+    })
  end
 
  local Toggle = Tab:CreateToggle({
@@ -3244,14 +3241,6 @@ local Keybind = Tab:CreateKeybind({
     Info = "Lags Your Game And Makes Enimes Walk Slower (Might Crash Game)",
     Callback = function()
         Popup2()
-    end,
- })
-
- local Button = Tab:CreateButton({
-    Name = "Cancel Lag Game",
-    Info = "Lags Your Game And Makes Enimes Walk Slower (Might Crash Game)",
-    Callback = function()
-        Popup()
     end,
  })
 
