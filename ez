@@ -859,8 +859,8 @@ function PortalW()
                         end
                     end
                 end
+                task.wait(60)
             end
-            task.wait(60)
         end
     end)
 end
