@@ -952,6 +952,10 @@ function Portal()
                 end
             end
         end
+        task.wait(280) 
+        if game.PlaceId == 8304191830 then
+            game:GetService("TeleportService"):Teleport(8304191830, LocalPlayer) 
+        end
     end)
 end
 
