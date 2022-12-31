@@ -863,7 +863,7 @@ function PortalW()
                     if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
                         task.wait(3)
                         getgenv().checkportalown = false
-                        getgenv().portalown = true
+                        getgenv().portalown = false
                     end
                 end
             end
@@ -946,11 +946,13 @@ function Portal()
                 }
 
                 game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
-                getgenv().portaljoin = false
                 task.wait()
-                while getgenv().checkportal == true do 
+                while getgenv().checkportal == true do
+                    task.wait() 
                     if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
+                        print("debugtest")
                         Checkifinpor()
+                        task.wait()
                         getgenv().checkportal = false
                     end
                 end
@@ -1614,19 +1616,21 @@ local Tab = Window:CreateTab("Main")
 local Section = Tab:CreateSection("Unit Select")
 
 function Checkifinpor()
-    Window:Prompt({
-        Title = 'Portal Check',
-        SubTitle = 'Joined Lobby!',
-        Content = '\nYou Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nGame Map: '..tostring(getgenv().pormap).."\nGame Modifier: "..tostring(getgenv().pormodifier),
-        Actions = {
-            Accept = {
-                Name = 'Okay',
-                Callback = function()
-                    -- You know what a callback is...
-                end,
+    if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
+        Window:Prompt({
+            Title = 'Portal Check',
+            SubTitle = 'Joined Lobby!',
+            Content = '\nYou Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nGame Map: '..tostring(getgenv().pormap).."\nGame Modifier: "..tostring(getgenv().pormodifier),
+            Actions = {
+                Accept = {
+                    Name = 'Okay',
+                    Callback = function()
+                        -- You know what a callback is...
+                    end,
+                }
             }
-        }
-    })
+        })
+    end
 end
 
 function Checkifinporbut()
@@ -1634,7 +1638,7 @@ function Checkifinporbut()
         Window:Prompt({
             Title = 'Portal Check',
             SubTitle = 'Joined Lobby!',
-            Content = '\nYou Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nGame Map: '..tostring(getgenv().pormap).."\nGame Modifier: "..tostring(getgenv().pormodifier),
+            Content = '\nYou Are In A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nGame Map: '..tostring(getgenv().pormap).."\nGame Modifier: "..tostring(getgenv().pormodifier),
             Actions = {
                 Accept = {
                     Name = 'Okay',
