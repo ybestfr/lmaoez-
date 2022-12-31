@@ -757,6 +757,18 @@ function Halloweenten()
 end)
 end
 
+function leave()
+    spawn(function()
+        local args = {
+            [1] = "_lobbytemplateportal29"
+        }
+        
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.request_leave_lobby:InvokeServer(unpack(args))
+    end)
+end
+
+getgenv().checkportalown = false
+
 local ids = {}
 
 
@@ -782,8 +794,6 @@ game.Players.LocalPlayer.PlayerGui.items.grid.List.Outer.ItemFrames.ChildAdded:C
     end
 end)
 
-getgenv().friendsonlyop = false
-
 function PortalW()
     task.spawn(function()
         while getgenv().portalown == true do --> if portalown is true, keep running
@@ -792,29 +802,74 @@ function PortalW()
                 game:GetService("ReplicatedStorage").endpoints.client_to_server.use_portal:InvokeServer(tostring(v), {["friends_only"] = getgenv().friendsonlyop}) --> use the portal
                 task.wait()
                 if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"]["portal_depth"].Value > tonumber(getgenv().numberfrfr) then
-                        local args = {
-                            [1] = "_lobbytemplateportal29"
-                        }
-                        
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.request_leave_lobby:InvokeServer(unpack(args))       
-                    else
-                        if getgenv().highcostportal == true then 
-                            if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "high_cost" then
-                                local args = {
-                                    [1] = "_lobbytemplateportal29"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_leave_lobby:InvokeServer(unpack(args))        
-                                table.remove(ids, _)     
-                            end
+                    leave()
+                    table.remove(ids, _)
+                else
+                    if getgenv().highcostportal then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "high_cost" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
                         end
+                    end
+                    task.wait()
+                    if getgenv().shield then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "shield_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().regen then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "regen_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().shortrange then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "short_range" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().tank then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "tank_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().fastportal then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "fast_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().portalstartp then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Active.Value == true then
+                            task.wait(1)
+                            local args = {
+                                [1] = "_lobbytemplateportal29"
+                            }
+                            
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                           
+                        end
+                    end
                 end
-             end
+                while getgenv().checkportalown == true do 
+                    if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
+                        task.wait(3)
+                        getgenv().checkportalown = false
+                        getgenv().portalown = true
+                    end
+                end
+            end
         end
     end)
 end
-
-
 
 function Holidaysafes()
     spawn(function()
@@ -879,6 +934,8 @@ function Holidaypor()
     end)
 end
 
+getgenv().checkportal = true
+
 function Portal()
     spawn(function()
         while getgenv().portaljoin == true do
@@ -889,29 +946,19 @@ function Portal()
                 }
 
                 game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
-            end
-        end
-        task.wait(280)
-        if game.PlaceId == 8304191830 then 
-            game:GetService("TeleportService"):Teleport(8304191830)
-        end
-    end)
-end
-
-function Portalstart()
-    spawn(function()
-        while getgenv().portalstartp == true do
-            task.wait(0.2)
-            if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Owner == game.Players.LocalPlayer then
-                local args = {
-                    [1] = "_lobbytemplateportal29"
-                }
-
-                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                getgenv().portaljoin = false
+                task.wait()
+                while getgenv().checkportal == true do 
+                    if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
+                        Checkifinpor()
+                        getgenv().checkportal = false
+                    end
+                end
             end
         end
     end)
 end
+
 
 function Testweb()
     spawn(function()
@@ -924,14 +971,105 @@ function Sendd()
     spawn(function()
         while getgenv().Check == true do
             task.wait()
-            local Gamedone = game:GetService("Workspace")["_DATA"].GameFinished.Value
-            if Gamedone == true then
+            if game:GetService("Workspace")["_DATA"].GameFinished.Value == true then
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/TrkVulcan/Carti-hub/main/webhook"))()
-                task.wait(8)
+                getgenv().Check = false
             end
         end
     end)
 end
+
+function Autoleave()
+    spawn(function()
+        while getgenv().Check == true do
+            task.wait()
+            if game:GetService("Workspace")["_DATA"].GameFinished.Value == true then
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrkVulcan/Carti-hub/main/webhook"))()
+                getgenv().Check = false
+            end
+        end
+    end)
+end
+
+
+task.spawn(function()
+    while task.wait() do
+		while getgenv().rukia == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "rukia_christmas_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait() do
+		while getgenv().whitebeard == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "whitebeard_christmas_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait() do
+		while getgenv().arminchrist == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "armin_christmas_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end
+end)
+
 
 function Go()
     spawn(function()
@@ -1475,6 +1613,54 @@ local Tab = Window:CreateTab("Main")
 
 local Section = Tab:CreateSection("Unit Select")
 
+function Checkifinpor()
+    Window:Prompt({
+        Title = 'Portal Check',
+        SubTitle = 'Joined Lobby!',
+        Content = '\nYou Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nGame Map: '..tostring(getgenv().pormap).."\nGame Modifier: "..tostring(getgenv().pormodifier),
+        Actions = {
+            Accept = {
+                Name = 'Okay',
+                Callback = function()
+                    -- You know what a callback is...
+                end,
+            }
+        }
+    })
+end
+
+function Checkifinporbut()
+    if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
+        Window:Prompt({
+            Title = 'Portal Check',
+            SubTitle = 'Joined Lobby!',
+            Content = '\nYou Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nGame Map: '..tostring(getgenv().pormap).."\nGame Modifier: "..tostring(getgenv().pormodifier),
+            Actions = {
+                Accept = {
+                    Name = 'Okay',
+                    Callback = function()
+                        -- You know what a callback is...
+                    end,
+                }
+            }
+        })
+    else
+        Window:Prompt({
+            Title = 'Interface Prompt',
+            SubTitle = 'Portal Check',
+            Content = 'Not Currently In A Portal',
+            Actions = {
+                Accept = {
+                    Name = 'Okay',
+                    Callback = function()
+                        -- You know what a callback is...
+                    end,
+                }
+            }
+        })
+    end
+end
+
 if getgenv().SelectedUnit == nil then getgenv().SelectedUnit = {} end
 
 local Dropdown1 = Tab:CreateDropdown({
@@ -1591,7 +1777,7 @@ local Button = Tab:CreateButton({
 
  local Toggle = Tab:CreateToggle({
     Name = "Auto Place Units",
-    Info = "Toggle info/Description.",
+    Info = "Will Automatically Place Units For You",
     CurrentValue = false,
     Flag = "AutoPlace", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
@@ -2545,7 +2731,7 @@ local Tab = Window:CreateTab("Portals")
 
 local Section = Tab:CreateSection("Main")
 
-local Paragraph = Tab:CreateParagraph({Title = "How To Use The Portal Filters", Content = "\nEach Number Represents A Tier, If You Were To Select Auto Use Portals 1 It Would Only Join Portals With A Tier Equal Too Or Below 1. If You Were To Select Auto Use Portals 7 It Would Only Join Portals With A Tier Equal Too Or Below 7 Etc..."})
+local Paragraph = Tab:CreateParagraph({Title = "How To Use The Portal Filters", Content = "\nEach Number Represents A Tier, If You Were To Select 1 Tier In The Slider It Would Only Join Portals With A Tier Equal Too Or Below 1. If You Were To Select 7 Tier In The Slider It Would Only Join Portals With A Tier Equal Too Or Below 7 Etc..."})
 
 local Section = Tab:CreateSection("Global Portals")
 
@@ -2569,10 +2755,60 @@ local Toggle = Tab:CreateToggle({
 	end,
 })
 
+local Button = Tab:CreateButton({
+    Name = "Check Portal",
+    Info = "Click This To See If Your In A Portal.", -- Speaks for itself, Remove if none.
+    Interact = 'Button',
+    Callback = function()
+      getgenv().pormap = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
+      getgenv().pormodifier = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value
+      getgenv().ownerofpor = tostring(game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Owner.Value)
+      if string.find(getgenv().pormap, "namek") then
+        getgenv().pormap = "Planet Namak"
+      elseif string.find(getgenv().pormap, "aot") then
+        getgenv().pormap = "Attack On Titan"
+      elseif string.find(getgenv().pormap, "demonslayer") then
+        getgenv().pormap = "Demon Slayer"
+      elseif string.find(getgenv().pormap, "naruto") then
+        getgenv().pormap = "Hidden Sand Village"
+      elseif string.find(getgenv().pormap, "marine") then
+        getgenv().pormap = "Marine's Ford"
+      elseif string.find(getgenv().pormap, "tokyoghoul") then
+        getgenv().pormap = "Ghoul City"
+      elseif string.find(getgenv().pormap, "hueco") then
+        getgenv().pormap = "Hollows World"
+      elseif string.find(getgenv().pormap, "hxhant") then
+        getgenv().pormap = "Ant Kingdom"
+      elseif string.find(getgenv().pormap, "magnolia") then
+        getgenv().pormap = "Magic Town"
+      elseif string.find(getgenv().pormap, "jjk") then
+        getgenv().pormap = "Cursed Academy"
+      elseif string.find(getgenv().pormap, "clover") then
+        getgenv().pormap = "Clover Kingdom"
+      elseif string.find(getgenv().pormap, "jojo") then
+        getgenv().pormap = "Cape Canaveral"
+      end
+      if string.find(getgenv().pormodifier, "fast") then
+        getgenv().pormodifier = "Fast Enemies"
+      elseif string.find(getgenv().pormodifier, "high") then
+        getgenv().pormodifier = "High Cost"
+      elseif string.find(getgenv().pormodifier, "shield") then
+        getgenv().pormodifier = "Shield Enemies" 
+      elseif string.find(getgenv().pormodifier, "regen") then
+        getgenv().pormodifier = "Regen Enemies"
+      elseif string.find(getgenv().pormodifier, "short") then
+        getgenv().pormodifier = "Short Range Units"
+      elseif string.find(getgenv().pormodifier, "tank") then
+        getgenv().pormodifier = "Tank Enemies"
+        end
+      Checkifinporbut()
+    end,
+  })
+
 local Section = Tab:CreateSection("Auto Portal Options")
 
 local Slider1 = Tab:CreateSlider({
-    Name = "Slider Example",
+    Name = "Select Ignore Tiers Above",
     Info = "Button info/Description.", -- Speaks for itself, Remove if none.
     Range = {0, 20},
     Increment = 1,
@@ -2581,7 +2817,6 @@ local Slider1 = Tab:CreateSlider({
     Flag = "TierSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         getgenv().numberfrfr = Value
-        print(getgenv().numberfrfr)
     end,
  })
 
@@ -2596,17 +2831,75 @@ local Dropdown = Tab:CreateDropdown({
     end,
  })
 
+ local Section = Tab:CreateSection("Portal Modifier Filter")
+
  local Dropdown = Tab:CreateDropdown({
     Name = "Ignore High Cost Portals?",
     Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
     Options = {"true","false"},
-    CurrentOption = "false",
+    CurrentOption = "true",
     Flag = "Dropdownhighcost", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Option)
         getgenv().highcostportal = Option
     end,
  })
 
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Shield Enemy Portals?",
+    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownshield", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().shield = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Regen Enemy Portals?",
+    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownregen", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().regen = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Short Range Units Portals?",
+    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownshortrange", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().shortrange = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore High Cost Units Portals?",
+    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdowntank", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().tank = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Fast Enemy Portals?",
+    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownfastportal", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().fastportal = Option
+    end,
+ })
+
+ local Section = Tab:CreateSection("Start Farm")
 
  local Toggle = Tab:CreateToggle({
 	Name = "Auto Start Portals",
@@ -2615,9 +2908,6 @@ local Dropdown = Tab:CreateDropdown({
 	Flag = "portalstart", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Value)
 		getgenv().portalstartp = Value
-		if Value == true then
-			Portalstart()
-		end
 	end,
 })
 
@@ -2636,11 +2926,48 @@ local Toggle = Tab:CreateToggle({
 })
 
 
-local Tab = Window:CreateTab("Auto Sell")
+local Tab = Window:CreateTab("Skins")
 
-local Paragraph = Tab:CreateParagraph({Title = "Auto Sell skins", Content = "This Tab Is For Selling The Skins That You Dont Want"})
+local Paragraph = Tab:CreateParagraph({Title = "Skins Tab:", Content = "This Tab Is For Selling The Skins That You Dont Want And For Update Event Stars"})
+
+local Section = Tab:CreateSection("Frozen Stars:")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Buy Frozen Stars 1x",
+    Info = "Turn Off To Stop Auto Buy!!",
+	CurrentValue = false,
+	Flag = "1x", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        getgenv().Checkcandy = Value
+        if Value == true then
+            Halloweenone()
+		end
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Buy Frozen Stars 10x",
+    Info = "Turn Off To Stop Auto Buy!!",
+	CurrentValue = false,
+	Flag = "10x", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Ten = Value
+		if Value == true then
+            Halloweenten()
+		end
+	end,
+})
 
 local Section = Tab:CreateSection("Rare Skins:")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Rukia Christmas Skin",
+	CurrentValue = false,
+	Flag = "rukia", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().rukia = Value
+	end,
+})
 
 local Toggle = Tab:CreateToggle({
 	Name = "Auto Sell Luffy Halloween Skin",
@@ -2653,6 +2980,7 @@ local Toggle = Tab:CreateToggle({
 		end
 	end,
 })
+
 
 local Toggle = Tab:CreateToggle({
 	Name = "Auto Sell Deku Halloween Skin",
@@ -2667,6 +2995,24 @@ local Toggle = Tab:CreateToggle({
 })
 
 local Section = Tab:CreateSection("Epic Skins:")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell White Beard Christmas Skin",
+	CurrentValue = false,
+	Flag = "whitebeardsell", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().whitebeard = Value
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Armin Christmas Skin",
+	CurrentValue = false,
+	Flag = "arminchristsell", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().arminchrist = Value
+	end,
+})
 
 local Toggle = Tab:CreateToggle({
 	Name = "Auto Sell Madara Halloween Skin",
@@ -2759,41 +3105,6 @@ local Button = Tab:CreateButton({
 	end,
 })
 
-local Label = Tab:CreateLabel("Dm Me On Discord Vulcan#0743 And Suggest More NPCS/Features You Want Me To Add!!") 
-
-local Tab = Window:CreateTab("Christmas Update") -- Title, Image
-
-local Paragraph = Tab:CreateParagraph({Title = "Christmas Update!", Content = "This Tab Is Meant For Everthing Christmas!"})
-
-local Section = Tab:CreateSection("Frozen Stars:")
-
-local Toggle = Tab:CreateToggle({
-	Name = "Auto Buy Frozen Stars 1x",
-    Info = "Turn Off To Stop Auto Buy!!",
-	CurrentValue = false,
-	Flag = "1x", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-	Callback = function(Value)
-        getgenv().Checkcandy = Value
-        if Value == true then
-            Halloweenone()
-		end
-	end,
-})
-
-local Toggle = Tab:CreateToggle({
-	Name = "Auto Buy Frozen Stars 10x",
-    Info = "Turn Off To Stop Auto Buy!!",
-	CurrentValue = false,
-	Flag = "10x", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-	Callback = function(Value)
-		getgenv().Ten = Value
-		if Value == true then
-            Halloweenten()
-		end
-	end,
-})
-
-
 local Tab = Window:CreateTab("Webhook") -- Title, Image
 
 local Paragraph = Tab:CreateParagraph({Title = "How to Use Webhook", Content = "Go To This Link For A Guide: https://youtu.be/QEKzu9fcdko"})
@@ -2824,61 +3135,12 @@ local Tab = Window:CreateTab("Misc") -- Title, Image
 
 local Paragraph = Tab:CreateParagraph({Title = "Miscellaneous", Content = "This Tab Is Meant For Features That Don't Fit Into The Other Tabs"})
 
-local Button = Tab:CreateButton({
-    Name = "Lag Game",
-    Info = "Lags Your Game And Makes Enimes Walk Slower (Might Crash Game)",
-    Callback = function()
-        while wait(0.8) do --// don't change it's the best
-            game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
-            local function getmaxvalue(val)
-               local mainvalueifonetable = 490000
-               if type(val) ~= "number" then
-                   return nil
-               end
-               local calculateperfectval = (mainvalueifonetable/(val+2))
-               return calculateperfectval
-            end
-            
-            local function bomb(tableincrease, tries)
-            local maintable = {}
-            local spammedtable = {}
-            
-            table.insert(spammedtable, {})
-            z = spammedtable[1]
-            
-            for i = 1, tableincrease do
-                local tableins = {}
-                table.insert(z, tableins)
-                z = tableins
-            end
-            
-            local calculatemax = getmaxvalue(tableincrease)
-            local maximum
-            
-            if calculatemax then
-                 maximum = calculatemax
-                 else
-                 maximum = 999999
-            end
-            
-            for i = 1, maximum do
-                 table.insert(maintable, spammedtable)
-            end
-            
-            for i = 1, tries do
-                 game.RobloxReplicatedStorage.SetPlayerBlockList:FireServer(maintable)
-            end
-            end
-            
-            bomb(0.1, 1) --// change values if client crashes
-            end
-    end,
- })
+local Section = Tab:CreateSection("UI Stuff")
 
 local Keybind = Tab:CreateKeybind({
     Name = "UI Hide Bind",
-    Info = "Hides The Carti Hub UI",
-    CurrentKeybind = "RightShift",
+    Info = "Hides The Carti Hub UI Default is Right Shift Do Not Set to Right Shift",
+    CurrentKeybind = "CapsLock",
     HoldToInteract = false,
     Flag = "hidebind", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Keybind)
@@ -2893,6 +3155,112 @@ local Keybind = Tab:CreateKeybind({
     end,
  })
 
+ local Section = Tab:CreateSection("Game Modifications")
+
+ function Popup()
+    Window:Prompt({
+        Title = 'Warning',
+        SubTitle = 'Warning!',
+        Content = 'This Will Cancel Lag Just Click The Cancel Button Below\nDO NOT CLICK THE BUTTON THAT STARTS WITH "I UNDERSTAND" IF YOU WANT TO CANCEL',
+        Actions = {
+            Accept = {
+                Name = 'Cancel',
+                Callback = function()
+                end,
+            }
+        }
+    })
+ end
+
+ function Popup2()
+    Window:Prompt({
+        Title = 'Warning',
+        SubTitle = 'Warning!',
+        Content = 'This Will Cause Your Game To Lag And You Might Crash\n If You Wish To Not Lag The Game Click The Button Below Cancel Lag Button Below',
+        Actions = {
+            Accept = {
+                Name = 'I Understand That I Might Crash',
+                Callback = function()
+                    while wait(0.8) do --// don't change it's the best
+                        game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+                        local function getmaxvalue(val)
+                           local mainvalueifonetable = 490000
+                           if type(val) ~= "number" then
+                               return nil
+                           end
+                           local calculateperfectval = (mainvalueifonetable/(val+2))
+                           return calculateperfectval
+                        end
+                        
+                        local function bomb(tableincrease, tries)
+                        local maintable = {}
+                        local spammedtable = {}
+                        
+                        table.insert(spammedtable, {})
+                        z = spammedtable[1]
+                        
+                        for i = 1, tableincrease do
+                            local tableins = {}
+                            table.insert(z, tableins)
+                            z = tableins
+                        end
+                        
+                        local calculatemax = getmaxvalue(tableincrease)
+                        local maximum
+                        
+                        if calculatemax then
+                             maximum = calculatemax
+                             else
+                             maximum = 999999
+                        end
+                        
+                        for i = 1, maximum do
+                             table.insert(maintable, spammedtable)
+                        end
+                        
+                        for i = 1, tries do
+                             game.RobloxReplicatedStorage.SetPlayerBlockList:FireServer(maintable)
+                        end
+                        end
+                        
+                        bomb(0.1, 1) --// change values if client crashes
+                        end
+                end,
+            }
+        }
+    })
+ end
+
+ local Toggle = Tab:CreateToggle({
+	Name = "Place Units Anywhere",
+    Info = "Will Allow You To Place Units Anywhere!",
+	CurrentValue = false,
+	Flag = "placeany", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().lol = Value
+		if Value == true then
+		Placeanywhere()
+		end
+	end,
+})
+
+ local Button = Tab:CreateButton({
+    Name = "Lag Game",
+    Info = "Lags Your Game And Makes Enimes Walk Slower (Might Crash Game)",
+    Callback = function()
+        Popup2()
+    end,
+ })
+
+ local Button = Tab:CreateButton({
+    Name = "Cancel Lag Game",
+    Info = "Lags Your Game And Makes Enimes Walk Slower (Might Crash Game)",
+    Callback = function()
+        Popup()
+    end,
+ })
+
+ local Section = Tab:CreateSection("Codes")
 
 local Input = Tab:CreateInput({
     Name = "Use Code",
@@ -2908,6 +3276,8 @@ local Input = Tab:CreateInput({
     end,
  })
 
+ local Section = Tab:CreateSection("Teleport Misc")
+
 local Toggle = Tab:CreateToggle({
 	Name = "Safemode",
     Info = "Leaves if another player joins you in-game!",
@@ -2921,18 +3291,6 @@ local Toggle = Tab:CreateToggle({
 	end,
 })
 
-local Toggle = Tab:CreateToggle({
-	Name = "Place Units Anywhere",
-    Info = "Will Allow You To Place Units Anywhere!",
-	CurrentValue = false,
-	Flag = "placeany", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-	Callback = function(Value)
-		getgenv().lol = Value
-		if Value == true then
-		Placeanywhere()
-		end
-	end,
-})
 
 local Toggle = Tab:CreateToggle({
 	Name = "Low Server Join",
