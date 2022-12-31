@@ -2807,7 +2807,7 @@ local Section = Tab:CreateSection("Auto Portal Options")
 
 local Slider1 = Tab:CreateSlider({
     Name = "Select Ignore Tiers Above",
-    Info = "Button info/Description.", -- Speaks for itself, Remove if none.
+    Info = "Will Only Join Maps Which Are Lower Than Or Equal To This Number", -- Speaks for itself, Remove if none.
     Range = {0, 20},
     Increment = 1,
     Suffix = "Tier",
@@ -2829,11 +2829,21 @@ local Dropdown = Tab:CreateDropdown({
     end,
  })
 
+ local Toggle = Tab:CreateToggle({
+	Name = "Auto Start Portals",
+    Info = "Will Auto Start Portals That You Own",
+	CurrentValue = false,
+	Flag = "portalstart", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().portalstartp = Value
+	end,
+})
+
  local Section = Tab:CreateSection("Portal Modifier Filter")
 
  local Dropdown = Tab:CreateDropdown({
     Name = "Ignore High Cost Portals?",
-    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Info = "Will Set Portals To Work On If They Arent High Cost Modifier",
     Options = {"true","false"},
     CurrentOption = "true",
     Flag = "Dropdownhighcost", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -2844,7 +2854,7 @@ local Dropdown = Tab:CreateDropdown({
 
  local Dropdown = Tab:CreateDropdown({
     Name = "Ignore Shield Enemy Portals?",
-    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Info = "Will Set Portals To Work On If They Arent Shield Enemy Modifier",
     Options = {"true","false"},
     CurrentOption = "true",
     Flag = "Dropdownshield", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -2855,7 +2865,7 @@ local Dropdown = Tab:CreateDropdown({
 
  local Dropdown = Tab:CreateDropdown({
     Name = "Ignore Regen Enemy Portals?",
-    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Info = "Will Set Portals To Work On If They Arent Regen Enemy Modifier",
     Options = {"true","false"},
     CurrentOption = "true",
     Flag = "Dropdownregen", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -2866,7 +2876,7 @@ local Dropdown = Tab:CreateDropdown({
 
  local Dropdown = Tab:CreateDropdown({
     Name = "Ignore Short Range Units Portals?",
-    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Info = "Will Set Portals To Work On If They Arent Short Range Modifier",
     Options = {"true","false"},
     CurrentOption = "true",
     Flag = "Dropdownshortrange", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -2877,7 +2887,7 @@ local Dropdown = Tab:CreateDropdown({
 
  local Dropdown = Tab:CreateDropdown({
     Name = "Ignore High Cost Units Portals?",
-    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Info = "Will Set Portals To Work On If They Arent High Cost Modifier",
     Options = {"true","false"},
     CurrentOption = "true",
     Flag = "Dropdowntank", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -2888,7 +2898,7 @@ local Dropdown = Tab:CreateDropdown({
 
  local Dropdown = Tab:CreateDropdown({
     Name = "Ignore Fast Enemy Portals?",
-    Info = "Will Set Portals To Work On If They Arent High Cost Difficulty",
+    Info = "Will Set Portals To Work On If They Arent Fast Enemy Modifier",
     Options = {"true","false"},
     CurrentOption = "true",
     Flag = "Dropdownfastportal", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -2900,18 +2910,6 @@ local Dropdown = Tab:CreateDropdown({
  local Section = Tab:CreateSection("Start Farm")
 
  local Toggle = Tab:CreateToggle({
-	Name = "Auto Start Portals",
-    Info = "Will Auto Start Portals That You Own",
-	CurrentValue = false,
-	Flag = "portalstart", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-	Callback = function(Value)
-		getgenv().portalstartp = Value
-	end,
-})
-
-local Section = Tab:CreateSection("Auto Portals")
-
-local Toggle = Tab:CreateToggle({
 	Name = "Auto Use Portals",
 	CurrentValue = false,
 	Flag = "portalown", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -2922,7 +2920,6 @@ local Toggle = Tab:CreateToggle({
 		end
 	end,
 })
-
 
 local Tab = Window:CreateTab("Skins")
 
