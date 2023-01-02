@@ -934,7 +934,7 @@ function Portal()
     spawn(function()
         while getgenv().portaljoin == true do
             task.wait(0.2)
-            if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].PortalReady.Value == true then
+            if game:GetService("Workspace"):WaitForChild("_PORTALS"):WaitForChild(Lobbies):WaitForChild("_lobbytemplateportal29"):WaitForChild(PortalReady).Value == true then
                 local args = {
                     [1] = "_lobbytemplateportal29"
                 }
@@ -951,10 +951,6 @@ function Portal()
                     end
                 end
             end
-        end
-        task.wait(280) 
-        if game.PlaceId == 8304191830 then
-            game:GetService("TeleportService"):Teleport(8304191830, LocalPlayer) 
         end
     end)
 end
