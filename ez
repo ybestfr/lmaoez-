@@ -2646,7 +2646,7 @@ local Section = Tab:CreateSection("Raid")
 
 local Slider = Tab:CreateSlider({
     Name = "Minutes Before Raid",
-    Info = "How Many Minutes Auto Leave Will Leave Before The Raid Starts", -- Speaks for itself, Remove if none.
+    Info = "How Many Minutes Before The Raid Starts That The Auto Leave Will Leave ", -- Speaks for itself, Remove if none.
     Range = {1, 30},
     Increment = 1,
     Suffix = "Minute(s)",
@@ -2672,7 +2672,7 @@ local Toggle = Tab:CreateToggle({
 	CurrentValue = false,
 	Flag = "raidsafemode", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Value)
-        if getgenv().timegmt == 1 or 5 or 9 and getgenv().timeminnowrf == getgenv().timegmtm then
+        if getgenv().timegmt == 12 or 4 or 8 and getgenv().timeminnowrf == getgenv().timegmtm then
             Rayfield.Flags["holiday"]:Set(false)
             Rayfield.Flags["holidaypor"]:Set(false)
             Rayfield.Flags["holidaysafe"]:Set(false)
