@@ -3011,7 +3011,7 @@ local Slider = Tab:CreateSlider({
 
  local Dropdown = Tab:CreateDropdown({
     Name = "Exclude Full Servers",
-    Info = "will filter any servers that are full (at server's max players)",
+    Info = "Will Filter Any Servers That Are Full (At Server's Max Players)",
     Options = {"true","flase"},
     CurrentOption = "true",
     Flag = "Excludefullservers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -3048,7 +3048,7 @@ local Slider = Tab:CreateSlider({
 
  local Button = Tab:CreateButton({
     Name = "Server Hop",
-    Info = "Click To Join A Server With The Preffered Settings", -- Speaks for itself, Remove if none.
+    Info = "Click To Join A Server With The Preferred Settings", -- Speaks for itself, Remove if none.
     Interact = 'Button',
     Callback = function()
         local rejoinPreferred = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ybestfr/lmaoez-/main/prefserver"))
