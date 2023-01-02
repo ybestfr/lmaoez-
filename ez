@@ -1585,7 +1585,7 @@ end
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
 
 local Window = Rayfield:CreateWindow({
-	Name = "Carti Hub - Anime Adventures UPD 6".." - "..tostring(identifyexecutor()),
+	Name = "Carti Hub - Anime Adventures UPD 8 🎄🎅".." - "..tostring(identifyexecutor()),
 	LoadingTitle = "Carti Hub",
 	LoadingSubtitle = "by Vulcan",
 	ConfigurationSaving = {
@@ -2835,11 +2835,37 @@ local Dropdown = Tab:CreateDropdown({
 
  local Toggle = Tab:CreateToggle({
 	Name = "Auto Start Portals",
-    Info = "Will Auto Start Portals That You Own",
+    Info = "Will Auto Start Portals That You Own After You Place Them",
 	CurrentValue = false,
 	Flag = "portalstart", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Value)
 		getgenv().portalstartp = Value
+	end,
+})
+
+local Slider1 = Tab:CreateSlider({
+    Name = "Auto Server Hop Time",
+    Info = "Will Server Hop After This Many Minutes", -- Speaks for itself, Remove if none.
+    Range = {0, 20},
+    Increment = 1,
+    Suffix = "Minute(s)",
+    CurrentValue = 1,
+    Flag = "serverhopSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().numberserverhop = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+	Name = "Auto Server Hop",
+    Info = "Will Server Hop After The Amt Of Minutes That You Selected Have Passed",
+	CurrentValue = false,
+	Flag = "portalstartserverhop", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        task.wait(tonumber(getgenv().numberserverhop) * 60)
+		if game.PlaceId == 8304191830 then
+            game:GetService("TeleportService"):Teleport(8304191830, LocalPlayer)
+        end
 	end,
 })
 
