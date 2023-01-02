@@ -2644,13 +2644,6 @@ local Button = Tab:CreateButton({
 })
 local Section = Tab:CreateSection("Raid")
 
-while task.wait() do
-    getgenv().timegmt = tonumber(os.date('!%H'))
-    getgenv().timegmtm = tonumber(os.date('!%m'))
-    getgenv().timeNow = os.date("*t")
-    getgenv().timeNow.min = getgenv().timeNow.min - tonumber(getgenv().timebeforeraid)
-end
-
 local Slider = Tab:CreateSlider({
     Name = "Minutes Before Raid",
     Info = "How Many Minutes Auto Leave Will Leave Before The Raid Starts", -- Speaks for itself, Remove if none.
@@ -2664,13 +2657,22 @@ local Slider = Tab:CreateSlider({
     end,
  })
 
+task.spawn(function()
+    while task.wait() do
+        getgenv().timegmt = tonumber(os.date('!%H'))
+        getgenv().timegmtm = tonumber(os.date('!%m'))
+        getgenv().timeNow = os.date("*t")
+        getgenv().timeminnowrf = tonumber(getgenv().timeNow.min) - tonumber(getgenv().timebeforeraid)
+    end
+end)
+
 local Toggle = Tab:CreateToggle({
 	Name = "Auto Leave When Raid",
     Info = "Will Auto Leave When A Raid Starts And Turn Off All Farming Features",
 	CurrentValue = false,
 	Flag = "raidsafemode", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Value)
-        if getgenv().timegmt == 1 or 5 or 9 and  getgenv().timeNow.min == getgenv().timegmtm then
+        if getgenv().timegmt == 1 or 5 or 9 and getgenv().timeminnowrf == getgenv().timegmtm then
             Rayfield.Flags["holiday"]:Set(false)
             Rayfield.Flags["holidaypor"]:Set(false)
             Rayfield.Flags["holidaysafe"]:Set(false)
