@@ -690,8 +690,6 @@ function Halloweenone()
 
                 local shardvalue = tonumber(string.match(value, '%d+'))
 
-                print(shardvalue)
-
                 if shardvalue > 149 then
 
                 local args = {
@@ -730,8 +728,6 @@ function Halloweenten()
                 local value = stars.Value
 
                 local shardvalue = tonumber(string.match(value, '%d+'))
-
-                print(shardvalue)
 
                 if shardvalue > 1499 then
 
@@ -873,7 +869,6 @@ function Holidaysafes()
 
             table.foreach(Playerpath:GetChildren(), function(i,v)
                 local player = v.Value 
-                print(player)
                 
                 if player ~= game.Players.LocalPlayer then 
                     task.wait(3)
@@ -944,7 +939,6 @@ function Portal()
                 while getgenv().checkportal == true do
                     task.wait() 
                     if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
-                        print("debugtest")
                         Checkifinpor()
                         task.wait()
                         getgenv().checkportal = false
@@ -1177,7 +1171,6 @@ end
 
 function Anti()
     spawn(function()
-        print("On fr")
 		while getgenv().Afk == true do
             task.wait(0.5)
             local vu = game:GetService("VirtualUser")
@@ -1731,6 +1724,7 @@ local Dropdown1 = Tab:CreateDropdown({
 
  local Button = Tab:CreateButton({
     Name = "Clear All",
+    Info = "Will Clear Your Selected Units",
     Callback = function()
     Dropdown1:Set("") -- The new option value
     Dropdown11:Set("") -- The new option value
@@ -1746,7 +1740,6 @@ local Dropdown1 = Tab:CreateDropdown({
         if v:IsA("ImageButton") then
             if v.EquippedList.Equipped.Visible == true then
                 if v.Main.petimage:GetChildren()[2].Name == x then
-                    --print(v.name.Text.." #"..v._uuid.Value)
                     getgenv().SelectedUnit["U"..tostring(y)] = tostring(v.name.Text.." #"..v._uuid.Value)
                     Updatejson()
                     return true 
@@ -1759,13 +1752,13 @@ end
 
 local Button = Tab:CreateButton({
     Name = "Use Selected Units",
+    Info = "Will Set The DropDowns To Your Selected Units\n(Dropdown Text May Not Update But It Still Worked)",
     Callback = function()
         for i, v in ipairs(game:GetService("Players").LocalPlayer.PlayerGui["spawn_units"].Lives.Frame.Units:GetChildren()) do
             if v:IsA("ImageButton") then
                 local unitxx = v.Main.petimage.WorldModel:GetChildren()[1]
                 if unitxx ~= nil then
                     if Check(unitxx.Name,v) then
-                        print(unitxx, v)
                     end
                 end
             end
@@ -1777,7 +1770,7 @@ local Button = Tab:CreateButton({
 
  local Toggle = Tab:CreateToggle({
     Name = "Auto Place Units",
-    Info = "Will Automatically Place Units For You",
+    
     CurrentValue = false,
     Flag = "AutoPlace", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
@@ -1795,9 +1788,7 @@ coroutine.resume(coroutine.create(function()
                 x = 1
                 y = 0.7
                 z = 1
-                --print("AutoFarming")
                 if game.Workspace._map:FindFirstChild("namek mushroom model") then
-                    print("Namak")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -1848,7 +1839,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("houses_new") then
-                    print("Aot")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -1899,7 +1889,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("Snow Particles") then
-                    print("Snowy")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -1950,7 +1939,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("sand_gate") then
-                    print("Sand")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2001,7 +1989,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("icebergs") then
-                    print("Marine")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2052,7 +2039,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("Helicopter Pad") then
-                    print("Ghoul")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2103,7 +2089,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("Bones/dust") then
-                    print("Hollow")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2154,7 +2139,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("Ant Nest") then
-                    print("Ant")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2205,7 +2189,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("light poles") then
-                    print("Magic")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2256,7 +2239,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("LanternsGround") then
-                    print("Cursed")    
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2306,8 +2288,7 @@ coroutine.resume(coroutine.create(function()
                             game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
                         end
                     end
-                elseif game.Workspace._map:FindFirstChild("pumpkins") then
-                        print("thriller_park")    
+                elseif game.Workspace._map:FindFirstChild("pumpkins") then 
                         for i = 1, 6 do
                             local unitinfo = getgenv().SelectedUnit["U" .. i]
                             if unitinfo ~= nil then
@@ -2357,8 +2338,7 @@ coroutine.resume(coroutine.create(function()
                                 game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
                             end
                         end
-                elseif game.Workspace._map:FindFirstChild("skeleton") then
-                    print("black_clover")    
+                elseif game.Workspace._map:FindFirstChild("skeleton") then 
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2409,7 +2389,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("graves") then
-                    print("Hollow Legend")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2460,7 +2439,6 @@ coroutine.resume(coroutine.create(function()
                         end
                     end
                 elseif game.Workspace._map:FindFirstChild("SpaceCenter") then
-                    print("Cape Canaveral")
                     for i = 1, 6 do
                         local unitinfo = getgenv().SelectedUnit["U" .. i]
                         if unitinfo ~= nil then
@@ -2662,6 +2640,46 @@ local Button = Tab:CreateButton({
 	Name = "Click To Teleport To Event Area",
 	Callback = function()
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Model.Part.CFrame
+	end,
+})
+local Section = Tab:CreateSection("Raid")
+
+while task.wait() do
+    getgenv().timegmt = tonumber(os.date('!%H'))
+    getgenv().timegmtm = tonumber(os.date('!%m'))
+    getgenv().timeNow = os.date("*t")
+    getgenv().timeNow.min = timeNow.min - tonumber(getgenv().timebeforeraid)
+end
+
+local Slider = Tab:CreateSlider({
+    Name = "Minutes Before Raid",
+    Info = "How Many Minutes Auto Leave Will Leave Before The Raid Starts", -- Speaks for itself, Remove if none.
+    Range = {1, 30},
+    Increment = 1,
+    Suffix = "Minute(s)",
+    CurrentValue = 5,
+    Flag = "minsbeforeraid", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().timebeforeraid = Value
+    end,
+ })
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Leave When Raid",
+    Info = "Will Auto Leave When A Raid Starts And Turn Off All Farming Features",
+	CurrentValue = false,
+	Flag = "raidsafemode", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        if getgenv().timegmt == 1 or 5 or 9 and  getgenv().timeNow.min == getgenv().timegmtm then
+            Rayfield.Flags["holiday"]:Set(false)
+            Rayfield.Flags["holidaypor"]:Set(false)
+            Rayfield.Flags["holidaysafe"]:Set(false)
+            Rayfield.Flags["dailyinfs"]:Set(false)
+            Rayfield.Flags["portal"]:Set(false)
+            Rayfield.Flags["portalown"]:Set(false)
+            Rayfield.Flags["portalstartserverhop"]:Set(false)
+            game:GetService("TeleportService"):Teleport(8304191830, LocalPlayer)
+        end
 	end,
 })
 
@@ -2948,6 +2966,117 @@ local Slider1 = Tab:CreateSlider({
 		end
 	end,
 })
+
+local Tab = Window:CreateTab("Server Hop")
+
+local Section = Tab:CreateSection("Main")
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Join High Or Low Player Servers",
+    Options = {"High","Low"},
+    CurrentOption = "Low",
+    Flag = "highOrLowPlayerServers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().horlplayerserv = Option
+    end,
+ })
+
+local Slider = Tab:CreateSlider({
+    Name = "Minimum Amt Of Players",
+    Info = "Set The Minimum Amt Of Player For Server Hop (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 30},
+    Increment = 1,
+    Suffix = "Player(s)",
+    CurrentValue = 1,
+    Flag = "Minplayers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().minplayers = Value
+    end,
+ })
+
+ local Slider = Tab:CreateSlider({
+    Name = "Maximum Amt Of Players",
+    Info = "Set The Minimum Amt Of Player For Server Hop (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 30},
+    Increment = 1,
+    Suffix = "Player(s)",
+    CurrentValue = 1,
+    Flag = "MaxPlayers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().maxplayers = Value
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Exclude Full Servers",
+    Info = "will filter any servers that are full (at server's max players)",
+    Options = {"true","flase"},
+    CurrentOption = "true",
+    Flag = "Excludefullservers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().Excludefull = Option
+    end,
+ })
+
+ local Slider = Tab:CreateSlider({
+    Name = "Maximum Amt Of Ping",
+    Info = "Will Filter Any Servers Whose Ping Is Higher Than This (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 500},
+    Increment = 5,
+    Suffix = "Ping",
+    CurrentValue = 100,
+    Flag = "MaxPing", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().maxping = Value
+    end,
+ })
+
+ local Slider = Tab:CreateSlider({
+    Name = "Minimum Amt Of FPS",
+    Info = "Will Filter Any Servers Whose FPS Is Not Atleast This (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 300},
+    Increment = 5,
+    Suffix = "Fps",
+    CurrentValue = 60,
+    Flag = "minfps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().minfps = Value
+    end,
+ })
+
+ local Button = Tab:CreateButton({
+    Name = "Server Hop",
+    Info = "Click To Join A Server With The Preffered Settings", -- Speaks for itself, Remove if none.
+    Interact = 'Button',
+    Callback = function()
+        local rejoinPreferred = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ybestfr/lmaoez-/main/prefserver"))
+        if getgenv().horlplayerserv == "High" then 
+            getgenv().horlplayerserv = "desc"
+        end
+        if getgenv().horlplayerserv == "Low" then 
+            getgenv().horlplayerserv = "asc"
+        end
+        rejoinPreferred({
+        SizeSort = getgenv().horlplayerserv, -- 'asc' or 'desc' - asc will prefer smallest, desc will prefer largest (num players). default is asc.
+        MinPlayers = tonumber(getgenv().minplayers), -- 0 is unused, >0 will filter servers with less players than this number
+        MaxPlayers = tonumber(getgenv().maxplayers), -- 0 is unused, >0 will filter servers with more players than this number
+        ExcludeFull = getgenv().Excludefull, -- will filter any servers that are full (at server's max players)
+        ExcludeSame = true, -- will filter the current server- to ensure you go someplace else
+        MinFps = tonumber(getgenv().maxping), -- 0 is unused, >0 will filter any servers that do not have at least this FPS
+        MaxPing = tonumber(getgenv().minfps), -- 0 is unused, >0 will filter any servers whose ping is higher than this
+        -- don't mess with these unless you understand what a weighted sort is
+        FpsSortWeight = 1, -- weight to apply to fps for sorting. higher value makes better (higher) fps impact sort more
+        PingSortWeight = 1, -- weight to apply to ping for sorting. higher value makes better (lower) ping impact sort more
+        SizeSortWeight = 5, -- weight for size (num players) for sorting. higher value makes preferred size (asc/desc) impact sort more
+        -- you probably don't need these
+        PrintVerbose = false, -- if true will output much more, including full server list sorted
+        PrintPrefixTime = false, -- if true will prefix all prints with time hh:mm:ss.SSS
+        PrintUseConsoleWindow = false -- if true will use a separate console window for all print output (if exploit can do that, or falls back to print)
+        })
+    end,
+ })
+
+
 
 local Tab = Window:CreateTab("Skins")
 
