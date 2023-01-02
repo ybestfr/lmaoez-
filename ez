@@ -1217,7 +1217,7 @@ function Inv()
     setclipboard("Discord.gg/traphub")
 end
 
-if not game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:WaitForChild("Empty") then
+if not game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:FindFirstChild("Empty") then
     local ids = {}
 
 
