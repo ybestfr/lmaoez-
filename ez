@@ -1217,79 +1217,55 @@ function Inv()
     setclipboard("Discord.gg/traphub")
 end
 
-local ids = {}
+if not game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:WaitForChild("Empty") then
+    local ids = {}
 
 
-for _, v in next,game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:GetChildren() do
-    if v:IsA("Frame") ~= true then
-        continue --> if it's not a Frame, skip it
+    for _, v in next,game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:GetChildren() do
+        if v:IsA("Frame") ~= true then
+            continue --> if it's not a Frame, skip it
+        end
+        if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
+            table.insert(ids, v.infinite.Text)
+        end
     end
-    if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
-        table.insert(ids, v.infinite.Text)
-    end
-end
 
-game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll.ChildAdded:Connect(function(v) --> if a new portal is added, add it to the table
-    if v:IsA("Frame") ~= true then
-        return --> if it's not named Frame, skip it
-    end
-    if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
-        table.insert(ids, v.infinite.Text)
-    end
-end)
+    game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll.ChildAdded:Connect(function(v) --> if a new portal is added, add it to the table
+        if v:IsA("Frame") ~= true then
+            return --> if it's not named Frame, skip it
+        end
+        if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
+            table.insert(ids, v.infinite.Text)
+        end
+    end)
 
-game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll.ChildRemoved:Connect(function(v) --> if a new portal is added, add it to the table
-    if v:IsA("Frame") ~= true then
-        return --> if it's not named Frame, skip it
-    end
-    if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
-        table.insert(ids, v.infinite.Text)
-    end
-end)
+    game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll.ChildRemoved:Connect(function(v) --> if a new portal is added, add it to the table
+        if v:IsA("Frame") ~= true then
+            return --> if it's not named Frame, skip it
+        end
+        if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
+            table.insert(ids, v.infinite.Text)
+        end
+    end)
 
 
-function Dailyinf()
-    task.spawn(function()
-        while getgenv().dailyinffr == true do --> if portalown is true, keep running
-            task.wait(0.2) --> wait 0.2 seconds
-            for _, v in next, ids do --> loop through the table
-                for _, v in next,game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:GetChildren() do
-                    if v:IsA("Frame") ~= true then
-                        continue --> if it's not a Frame, skip it
-                    end
-                    if v.ClaimQuest.Visible == true then --> if it's not in the table, add it
-                        table.remove(ids, _)
-                    end
-                end
-                getgenv().ogpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    function Dailyinf()
+        task.spawn(function()
+            while getgenv().dailyinffr == true do --> if portalown is true, keep running
+                task.wait(0.2) --> wait 0.2 seconds
                 for _, v in next, ids do --> loop through the table
-                    if v:find("Namak")then 
-                        if getgenv().Namak == true then
-                        if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                            local args = {
-                                [1] = "_lobbytemplategreen4"
-                            }
-                            
-                            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                            local args = {
-                                [1] = "_lobbytemplategreen4",
-                                [2] = "namek_infinite",
-                                [3] = true,
-                                [4] = "Hard"
-                            }
-                            
-                            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                            local args = {
-                                [1] = "_lobbytemplategreen4"
-                            }
-                            
-                            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                            Tp()
-                            break
+                    for _, v in next,game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:GetChildren() do
+                        if v:IsA("Frame") ~= true then
+                            continue --> if it's not a Frame, skip it
                         end
+                        if v.ClaimQuest.Visible == true then --> if it's not in the table, add it
+                            table.remove(ids, _)
                         end
-                    elseif v:find("Shiganshinu")then 
-                        if getgenv().Shiganshinu == true then
+                    end
+                    getgenv().ogpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    for _, v in next, ids do --> loop through the table
+                        if v:find("Namak")then 
+                            if getgenv().Namak == true then
                             if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
                                 local args = {
                                     [1] = "_lobbytemplategreen4"
@@ -1298,7 +1274,7 @@ function Dailyinf()
                                 game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
                                 local args = {
                                     [1] = "_lobbytemplategreen4",
-                                    [2] = "aot_infinite",
+                                    [2] = "namek_infinite",
                                     [3] = true,
                                     [4] = "Hard"
                                 }
@@ -1312,264 +1288,290 @@ function Dailyinf()
                                 Tp()
                                 break
                             end
-                        end
-                    elseif v:find("Snowy")then 
-                        if getgenv().Snowy == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "demonslayer_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
                             end
-                        end
-                    elseif v:find("Hidden")then 
-                        if getgenv().Hidden == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "naruto_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Shiganshinu")then 
+                            if getgenv().Shiganshinu == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "aot_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Marine's")then 
-                        if getgenv().Marine == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "marineford_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Snowy")then 
+                            if getgenv().Snowy == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "demonslayer_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Ghoul")then 
-                        if getgenv().Ghoul == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "tokyoghoul_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Hidden")then 
+                            if getgenv().Hidden == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "naruto_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Hollow")then 
-                        if getgenv().Hollow == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "hueco_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Marine's")then 
+                            if getgenv().Marine == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "marineford_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Ant")then 
-                        if getgenv().Ant == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "hxhant_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Ghoul")then 
+                            if getgenv().Ghoul == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "tokyoghoul_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Magic")then 
-                        if getgenv().Magic == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "magnolia_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Hollow")then 
+                            if getgenv().Hollow == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "hueco_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Cursed")then 
-                        if getgenv().Cursed == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "jjk_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Ant")then 
+                            if getgenv().Ant == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "hxhant_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Clover")then 
-                        if getgenv().Clover == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "clover_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Magic")then 
+                            if getgenv().Magic == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "magnolia_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
-                        end
-                    elseif v:find("Cape")then 
-                        if getgenv().Cape == true then
-                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
-                                local args = {
-                                    [1] = "_lobbytemplategreen4",
-                                    [2] = "jojo_infinite",
-                                    [3] = true,
-                                    [4] = "Hard"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
-                                local args = {
-                                    [1] = "_lobbytemplategreen4"
-                                }
-                                
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
-                                Tp()
-                                break
+                        elseif v:find("Cursed")then 
+                            if getgenv().Cursed == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "jjk_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Clover")then 
+                            if getgenv().Clover == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "clover_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Cape")then 
+                            if getgenv().Cape == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "jojo_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
                             end
                         end
                     end
+                    break
                 end
                 break
             end
-            break
-        end
-    end)
+        end)
+    end
 end
 
 function Tp()
