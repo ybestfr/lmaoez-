@@ -2648,7 +2648,7 @@ while task.wait() do
     getgenv().timegmt = tonumber(os.date('!%H'))
     getgenv().timegmtm = tonumber(os.date('!%m'))
     getgenv().timeNow = os.date("*t")
-    getgenv().timeNow.min = timeNow.min - tonumber(getgenv().timebeforeraid)
+    getgenv().timeNow.min = getgenv().timeNow.min - tonumber(getgenv().timebeforeraid)
 end
 
 local Slider = Tab:CreateSlider({
