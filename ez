@@ -2998,7 +2998,7 @@ local Slider = Tab:CreateSlider({
 
  local Slider = Tab:CreateSlider({
     Name = "Maximum Amt Of Players",
-    Info = "Set The Minimum Amt Of Player For Server Hop (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Info = "Set The Maximum Amt Of Player For Server Hop (0 Is Unused)", -- Speaks for itself, Remove if none.
     Range = {0, 30},
     Increment = 1,
     Suffix = "Player(s)",
