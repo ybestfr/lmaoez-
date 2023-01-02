@@ -1,6 +1,4 @@
 --[[
-	Rejoin Preferred Server Script by Kozenomenon#0001
-
 	Settings allow you to define your preferences for finding a server to rejoin to.
 	Sort is weighted using num of players, fps, and ping. Num of players goes by the 'SizeSort' setting: asc/desc.
 	Example call using default values shown below.
