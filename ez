@@ -5,7 +5,6 @@ if not game:IsLoaded() then
     game:IsLoaded()
 end
 
-
 getgenv().Test = false
 getgenv().Lmao = false
 getgenv().One = false
@@ -20,7 +19,7 @@ getgenv().Luffy = false
 getgenv().Deku = false
 getgenv().Madara = false
 getgenv().Gon = false
-getgenv().Checkfinish = true
+getgenv().Checkfinish = true 
 getgenv().Check = true
 getgenv().portaljoin = false
 getgenv().holidayjoin = false
@@ -34,7 +33,6 @@ local Units = {}
 
 local function loadUnit()
     repeat task.wait() until game.Players.LocalPlayer.PlayerGui:WaitForChild("collection"):WaitForChild("grid"):WaitForChild("List"):WaitForChild("Outer"):WaitForChild("UnitFrames")
-    task.wait(2)
     table.clear(Units)
     for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
         if v.Name == "CollectionUnitFrame" then
@@ -2495,6 +2493,85 @@ coroutine.resume(coroutine.create(function()
 end))
 --#region ----------------------
 --#endregion
+
+local Tab = Window:CreateTab("Fuse Units")
+
+local Paragraph = Tab:CreateParagraph({Title = "Auto Fuse Units", Content = "Select The Main Unit And The Rarity Of The Units Going Into It\n(Lock Units That You Dont Want To Acidenallty Fuse)"})
+
+local Section = Tab:CreateSection("Auto Fuse Config")
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Unit To Fuse Into",
+    Options = Units,
+    CurrentOption = getgenv().unittofuse or "",-- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().unittofuse = Option
+        local unitinfo_ = Option:split(" #")
+        getgenv().unittofusefr = unitinfo_[2]
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Auto Fuse Rarity's",
+    Options = {"Rare","Epic","Legendary"},
+    CurrentOption = "Rare",
+    Flag = "Unitfusetograrity", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().UnitToFuse = Option
+    end,
+ }) 
+
+ local Section = Tab:CreateSection("Auto Fuse")
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto Fuse Units",
+    CurrentValue = false,
+    Flag = "AutoPlace", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Unitfusetog = Value
+    end,
+ })
+
+
+getgenv().UnitCache = {}
+
+for _, Module in next, game:GetService("ReplicatedStorage"):WaitForChild("src"):WaitForChild("Data"):WaitForChild("Units"):GetDescendants() do
+    if Module:IsA("ModuleScript") and Module.Name ~= "UnitPresets" then
+        for UnitName, UnitStats in next, require(Module) do
+            getgenv().UnitCache[UnitName] = UnitStats
+        end
+    end
+end
+
+
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+        if getgenv().Unitfusetog then
+    
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
+                if v.Name == "CollectionUnitFrame" then
+                    repeat task.wait() until v:FindFirstChild("name")
+                    for _, Info in next, getgenv().UnitCache do
+                        if Info.name == v.name.Text and Info.rarity == getgenv().UnitToFuse then
+                            local args = {
+                                [1] = getgenv().unittofusefr,
+                                [2] = {
+                                    [1] = tostring(v._uuid.Value)
+                                }
+                            }
+                            
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.feed_units:InvokeServer(unpack(args))
+                            
+                         end
+                    end
+                end
+            end
+            
+        end
+    end
+    end))
+
+
 local Tab = Window:CreateTab("Daily Inf")
 
 local Paragraph = Tab:CreateParagraph({Title = "Daily Infinite Info", Content = "Toggle On The Maps You Want Auto Daily To Join\n(Do Not Toggle On Maps You Havent Unlocked Infinite Mode For Yet)"})
@@ -2646,7 +2723,7 @@ local Section = Tab:CreateSection("Raid")
 
 local Slider = Tab:CreateSlider({
     Name = "Minutes Before Raid",
-    Info = "How Many Minutes Before The Raid Starts That The Auto Leave Will Leave ", -- Speaks for itself, Remove if none.
+    Info = "How Many Minutes Before The Raid Starts Do You Want It To Leave", -- Speaks for itself, Remove if none.
     Range = {1, 30},
     Increment = 1,
     Suffix = "Minute(s)",
@@ -2659,6 +2736,9 @@ local Slider = Tab:CreateSlider({
 
 task.spawn(function()
     while task.wait() do
+        if getgenv().timebeforeraid == nil then
+            getgenv().timebeforeraid = 5
+        end
         getgenv().timegmt = tonumber(os.date('!%H'))
         getgenv().timegmtm = tonumber(os.date('!%m'))
         getgenv().timeNow = os.date("*t")
