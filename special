@@ -1,4 +1,3 @@
-if getgenv().executed ~= true then 
     local repo = 'https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'
 
     local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
@@ -11,7 +10,7 @@ if getgenv().executed ~= true then
         -- Position and Size are also valid options here
         -- but you do not need to define them unless you are changing them :)
 
-        Title = 'Carti Hub Special 🍆🍑💦',
+        Title = 'Carti Hub Special 🍆 🍑 💦',
         Center = true, 
         AutoShow = true,
     })
@@ -54,7 +53,13 @@ if getgenv().executed ~= true then
     nGroupBox:AddToggle('friporjoin', {
         Text = 'Auto Rejoin Friends Portal',
         Default = true, -- Default value (true / false)
-        Tooltip = 'Turn This On To ReJoin The Same Public Server', -- Information shown when you hover over the toggle
+        Tooltip = 'Turn This On To Join Portals That Your Friend Opens', -- Information shown when you hover over the toggle
+    })
+
+    nGroupBox:AddToggle('friporjoinown', {
+        Text = 'Auto Rejoin Any Portal',
+        Default = true, -- Default value (true / false)
+        Tooltip = 'Turn This On To Join Portals That Anyone Opens', -- Information shown when you hover over the toggle
     })
 
     Toggles.AutoRejointoggle:OnChanged(function()
@@ -63,6 +68,10 @@ if getgenv().executed ~= true then
 
     Toggles.friporjoin:OnChanged(function()
         getgenv().autojoinpors = Toggles.friporjoin.Value
+    end)
+
+    Toggles.friporjoinown:OnChanged(function()
+        getgenv().autojoinporsnop = Toggles.friporjoinown.Value
     end)
 
     -- This should print to the console: "My toggle state changed! New value: false"
@@ -135,6 +144,18 @@ if getgenv().executed ~= true then
         end
     end)
 
+    task.spawn(function()
+        while task.wait() do
+            if getgenv().autojoinporsnop == true then
+                for _, v in next, game:GetService("Workspace")["_PORTALS"].Lobbies:GetChildren() do
+                    if tostring(v.Owner.Value) ~= "nil" then 
+                        game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(tostring(v))
+                    end
+                end
+            end
+        end
+    end)
+
     -- UI Settings
     local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
 
@@ -175,7 +196,3 @@ if getgenv().executed ~= true then
 
     -- You can use the SaveManager:LoadAutoloadConfig() to load a config 
     -- which has been marked to be one that auto loads!
-    getgenv().executed = true
-else 
-    print('executed alread')
-end
