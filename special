@@ -118,7 +118,84 @@ Options.MyTextbox2:OnChanged(function()
 end)
 
 Library:SetWatermarkVisibility(true)
-Library:SetWatermark('Suck My Dick Faggots')
+task.spawn(function()
+    while task.wait() do
+      if game.Players.LocalPlayer.AlreadyInLobby.Value == false then 
+        Library:SetWatermark('Not Currently In A Portal')
+      else
+        Library:SetWatermark('You Have Joined A Portal... Loading Info')
+      end
+        while game.Players.LocalPlayer.AlreadyInLobby.Value == true do
+          task.wait()
+          getgenv().pormap = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
+          getgenv().pormodifier = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value
+          getgenv().ownerofpor = tostring(game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Owner.Value)
+          if string.find(getgenv().pormap, "namek") then
+            getgenv().pormap = "Planet Namak"
+          elseif string.find(getgenv().pormap, "aot") then
+            getgenv().pormap = "Attack On Titan"
+          elseif string.find(getgenv().pormap, "demonslayer") then
+            getgenv().pormap = "Demon Slayer"
+          elseif string.find(getgenv().pormap, "naruto") then
+            getgenv().pormap = "Hidden Sand Village"
+          elseif string.find(getgenv().pormap, "marine") then
+            getgenv().pormap = "Marine's Ford"
+          elseif string.find(getgenv().pormap, "tokyoghoul") then
+            getgenv().pormap = "Ghoul City"
+          elseif string.find(getgenv().pormap, "hueco") then
+            getgenv().pormap = "Hollows World"
+          elseif string.find(getgenv().pormap, "hxhant") then
+            getgenv().pormap = "Ant Kingdom"
+          elseif string.find(getgenv().pormap, "magnolia") then
+            getgenv().pormap = "Magic Town"
+          elseif string.find(getgenv().pormap, "jjk") then
+            getgenv().pormap = "Cursed Academy"
+          elseif string.find(getgenv().pormap, "clover") then
+            getgenv().pormap = "Clover Kingdom"
+          elseif string.find(getgenv().pormap, "jojo") then
+            getgenv().pormap = "Cape Canaveral"
+          end
+          if string.find(getgenv().pormodifier, "fast") then
+            getgenv().pormodifier = "Fast Enemies"
+          elseif string.find(getgenv().pormodifier, "high") then
+            getgenv().pormodifier = "High Cost"
+          elseif string.find(getgenv().pormodifier, "shield") then
+            getgenv().pormodifier = "Shield Enemies" 
+          elseif string.find(getgenv().pormodifier, "regen") then
+            getgenv().pormodifier = "Regen Enemies"
+          elseif string.find(getgenv().pormodifier, "short") then
+            getgenv().pormodifier = "Short Range Units"
+          elseif string.find(getgenv().pormodifier, "tank") then
+            getgenv().pormodifier = "Tank Enemies"
+            end
+            if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value ~= nil or "" then 
+              if string.find(getgenv().pormap, "winter_1") then
+                getgenv().pormapact = "Act 1"
+              elseif string.find(getgenv().pormap, "winter_2") then
+                getgenv().pormapact = "Act 2"
+              elseif string.find(getgenv().pormap, "winter_3") then
+                getgenv().pormapact = "Act 3"
+              elseif string.find(getgenv().pormap, "winter_4") then
+                getgenv().pormapact = "Act 4"
+              elseif string.find(getgenv().pormap, "winter_5") then
+                getgenv().pormapact = "Act 5"
+              elseif string.find(getgenv().pormap, "winter_6") then
+                getgenv().pormapact = "Act 6"
+              end
+            elseif getgenv().pormapact == nil or "" then 
+              getgenv().pormapact = "Error Getting Act Number"
+            end
+          if getgenv().ownerofpor ~= "nil" then 
+            task.wait()
+            getgenv().pormul = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Timer.Value
+            getgenv().pordif = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"]["lobby_difficulty_scale"].Value
+            getgenv().poract = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
+            getgenv().porplayers = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Players:GetChildren()
+            Library:SetWatermark('You Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nTime Until Start: '..tostring(getgenv().pormul)..'\nGame Map: '..tostring(getgenv().pormap).." Act "..tostring((string.match(getgenv().poract, '%d[%d.,]*'))).."\nGame Modifier: "..tostring(getgenv().pormodifier)..'\nPortal Difficulty Scale: '..tostring(string.format("%2.1f", getgenv().pordif))..'x')
+          end
+    end
+end
+end)
 
 Library:OnUnload(function()
     print('Unloaded!')
