@@ -5,277 +5,3614 @@ if not game:IsLoaded() then
     game:IsLoaded()
 end
 
-local repo = 'https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'
+getgenv().Test = false
+getgenv().Lmao = false
+getgenv().One = false
+getgenv().Ten = false
+getgenv().Checkcandy = false
+getgenv().Low = false
+getgenv().Parad = false
+getgenv().Womb = false
+getgenv().Claim = false
+getgenv().Afk = false
+getgenv().Luffy = false
+getgenv().Deku = false
+getgenv().Madara = false
+getgenv().Gon = false
+getgenv().Checkfinish = true 
+getgenv().Check = true
+getgenv().portaljoin = false
+getgenv().holidayjoin = false
+getgenv().holidaysafe = false
+getgenv().portalown = false
+getgenv().holidayjoinpor = false
+getgenv().lol = false
+getgenv().placeany = true
 
-local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
-local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
-local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
+local Units = {}
 
-local Window = Library:CreateWindow({
-    -- Set Center to true if you want the menu to appear in the center
-    -- Set AutoShow to true if you want the menu to appear when it is created
-    -- Position and Size are also valid options here
-    -- but you do not need to define them unless you are changing them :)
-
-    Title = 'Carti Hub Special 🍆 🍑 💦',
-    Center = true, 
-    AutoShow = true,
-})
-
--- You do not have to set your tabs & groups up this way, just a prefrence.
-local Tabs = {
-    -- Creates a new tab titled Main
-    Main = Window:AddTab('Main'), 
-    ['UI Settings'] = Window:AddTab('UI Settings'),
-}
-
--- Groupbox and Tabbox inherit the same functions
--- except Tabboxes you have to call the functions on a tab (Tabbox:AddTab(name))
-local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Main Stuff')
-local nGroupBox = Tabs.Main:AddLeftGroupbox('Other Stuff')
-
-local MyButton = LeftGroupBox:AddButton('Copy Job Id', function()
-    setclipboard(game.JobId)
-end)
-
--- Tabboxes are a tiny bit different, but here's a basic example:
---[[
-
-local TabBox = Tabs.Main:AddLeftTabbox() -- Add Tabbox on left side
-
-local Tab1 = TabBox:AddTab('Tab 1')
-local Tab2 = TabBox:AddTab('Tab 2')
-
--- You can now call AddToggle, etc on the tabs you added to the Tabbox
-]]
-
--- Groupbox:AddToggle
--- Arguments: Index, Options
-LeftGroupBox:AddToggle('AutoRejointoggle', {
-    Text = 'Auto Rejoin Same Server',
-    Default = true, -- Default value (true / false)
-    Tooltip = 'Turn This On To ReJoin The Same Public Server', -- Information shown when you hover over the toggle
-})
-
-nGroupBox:AddToggle('friporjoin', {
-    Text = 'Auto Rejoin Friends Portal',
-    Default = true, -- Default value (true / false)
-    Tooltip = 'Turn This On To Join Portals That Your Friend Opens', -- Information shown when you hover over the toggle
-})
-
-nGroupBox:AddToggle('friporjoinown', {
-    Text = 'Auto Rejoin Any Portal',
-    Default = true, -- Default value (true / false)
-    Tooltip = 'Turn This On To Join Portals That Anyone Opens', -- Information shown when you hover over the toggle
-})
-
-Toggles.AutoRejointoggle:OnChanged(function()
-    getgenv().autoleave = Toggles.AutoRejointoggle.Value
-end)
-
-Toggles.friporjoin:OnChanged(function()
-    getgenv().autojoinpors = Toggles.friporjoin.Value
-end)
-
-Toggles.friporjoinown:OnChanged(function()
-    getgenv().autojoinporsnop = Toggles.friporjoinown.Value
-end)
-
--- This should print to the console: "My toggle state changed! New value: false"
-Toggles.AutoRejointoggle:SetValue(false)
-
-
-LeftGroupBox:AddInput('MyTextbox', {
-    Default = '',
-    Numeric = false, -- true / false, only allows numbers
-    Finished = true, -- true / false, only calls callback when you press enter
-
-    Text = 'JobId',
-    Tooltip = 'Paste JobId (Server To Rejoin)', -- Information shown when you hover over the textbox
-
-    Placeholder = 'JobId Here', -- placeholder text when the box is empty
-    -- MaxLength is also an option which is the max length of the text
-})
-
-Options.MyTextbox:OnChanged(function()
-    getgenv().jobid = tostring(Options.MyTextbox.Value)
-end)
-
-nGroupBox:AddInput('MyTextbox2', {
-    Default = '',
-    Numeric = false, -- true / false, only allows numbers
-    Finished = true, -- true / false, only calls callback when you press enter
-
-    Text = 'Friend username',
-    Tooltip = 'Paste Friends Username (Will Join Portal Of That User)', -- Information shown when you hover over the textbox
-
-    Placeholder = 'Username Here', -- placeholder text when the box is empty
-    -- MaxLength is also an option which is the max length of the text
-})
-
-Options.MyTextbox2:OnChanged(function()
-    getgenv().friend = tostring(Options.MyTextbox2.Value)
-end)
-
-Library:SetWatermarkVisibility(true)
-task.spawn(function()
-    while task.wait() do
-      if game.Players.LocalPlayer.AlreadyInLobby.Value == false then 
-        Library:SetWatermark('Not Currently In A Portal')
-      else
-        Library:SetWatermark('You Have Joined A Portal... Loading Info')
-      end
-        while game.Players.LocalPlayer.AlreadyInLobby.Value == true do
-          task.wait()
-          getgenv().pormap = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
-          getgenv().pormodifier = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value
-          getgenv().ownerofpor = tostring(game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Owner.Value)
-          if string.find(getgenv().pormap, "namek") then
-            getgenv().pormap = "Planet Namak"
-          elseif string.find(getgenv().pormap, "aot") then
-            getgenv().pormap = "Attack On Titan"
-          elseif string.find(getgenv().pormap, "demonslayer") then
-            getgenv().pormap = "Demon Slayer"
-          elseif string.find(getgenv().pormap, "naruto") then
-            getgenv().pormap = "Hidden Sand Village"
-          elseif string.find(getgenv().pormap, "marine") then
-            getgenv().pormap = "Marine's Ford"
-          elseif string.find(getgenv().pormap, "tokyoghoul") then
-            getgenv().pormap = "Ghoul City"
-          elseif string.find(getgenv().pormap, "hueco") then
-            getgenv().pormap = "Hollows World"
-          elseif string.find(getgenv().pormap, "hxhant") then
-            getgenv().pormap = "Ant Kingdom"
-          elseif string.find(getgenv().pormap, "magnolia") then
-            getgenv().pormap = "Magic Town"
-          elseif string.find(getgenv().pormap, "jjk") then
-            getgenv().pormap = "Cursed Academy"
-          elseif string.find(getgenv().pormap, "clover") then
-            getgenv().pormap = "Clover Kingdom"
-          elseif string.find(getgenv().pormap, "jojo") then
-            getgenv().pormap = "Cape Canaveral"
-          end
-          if string.find(getgenv().pormodifier, "fast") then
-            getgenv().pormodifier = "Fast Enemies"
-          elseif string.find(getgenv().pormodifier, "high") then
-            getgenv().pormodifier = "High Cost"
-          elseif string.find(getgenv().pormodifier, "shield") then
-            getgenv().pormodifier = "Shield Enemies" 
-          elseif string.find(getgenv().pormodifier, "regen") then
-            getgenv().pormodifier = "Regen Enemies"
-          elseif string.find(getgenv().pormodifier, "short") then
-            getgenv().pormodifier = "Short Range Units"
-          elseif string.find(getgenv().pormodifier, "tank") then
-            getgenv().pormodifier = "Tank Enemies"
-            end
-            if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value ~= nil or "" then 
-              if string.find(getgenv().pormap, "winter_1") then
-                getgenv().pormapact = "Act 1"
-              elseif string.find(getgenv().pormap, "winter_2") then
-                getgenv().pormapact = "Act 2"
-              elseif string.find(getgenv().pormap, "winter_3") then
-                getgenv().pormapact = "Act 3"
-              elseif string.find(getgenv().pormap, "winter_4") then
-                getgenv().pormapact = "Act 4"
-              elseif string.find(getgenv().pormap, "winter_5") then
-                getgenv().pormapact = "Act 5"
-              elseif string.find(getgenv().pormap, "winter_6") then
-                getgenv().pormapact = "Act 6"
-              end
-            elseif getgenv().pormapact == nil or "" then 
-              getgenv().pormapact = "Error Getting Act Number"
-            end
-          if getgenv().ownerofpor ~= "nil" then 
-            task.wait()
-            getgenv().pormul = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Timer.Value
-            getgenv().pordif = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"]["lobby_difficulty_scale"].Value
-            getgenv().poract = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
-            getgenv().porplayers = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Players:GetChildren()
-            Library:SetWatermark('You Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nTime Until Start: '..tostring(getgenv().pormul)..'\nGame Map: '..tostring(getgenv().pormap).." Act "..tostring((string.match(getgenv().poract, '%d[%d.,]*'))).."\nGame Modifier: "..tostring(getgenv().pormodifier)..'\nPortal Difficulty Scale: '..tostring(string.format("%2.1f", getgenv().pordif))..'x')
-          end
+local function loadUnit()
+    repeat task.wait() until game.Players.LocalPlayer.PlayerGui:WaitForChild("collection"):WaitForChild("grid"):WaitForChild("List"):WaitForChild("Outer"):WaitForChild("UnitFrames")
+    table.clear(Units)
+    for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
+        if v.Name == "CollectionUnitFrame" then
+            repeat task.wait() until v:FindFirstChild("_uuid")
+            table.insert(Units, v.name.Text .. " #" .. v._uuid.Value)
+        end
     end
 end
-end)
 
-Library:OnUnload(function()
-    print('Unloaded!')
-    Library.Unloaded = true
-end)
+loadUnit()
 
-coroutine.resume(coroutine.create(function()
-    local GameFinished = game:GetService("Workspace"):WaitForChild("_DATA"):WaitForChild("GameFinished")
-    GameFinished:GetPropertyChangedSignal("Value"):Connect(function()
-        print("Changed", GameFinished.Value == true)
-        if GameFinished.Value == true then
-            repeat task.wait() until  game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Enabled == true
-            task.wait()
-            if getgenv().autoleave then
-                game:GetService("TeleportService"):TeleportToPlaceInstance(8304191830, getgenv().jobid, LocalPlayer)
+local HttpService = game:GetService("HttpService")
+local Workspace = game:GetService("Workspace") 
+local plr = game:GetService("Players").LocalPlayer
+local RunService = game:GetService("RunService")
+local mouse = game.Players.LocalPlayer:GetMouse()
+local UserInputService = game:GetService("UserInputService")
+getgenv().savefilename = "Carti Hub Anime Adventures "..game.Players.LocalPlayer.Name..".json"
+
+function sex()
+    -- reads jsonfile
+    local jsonData = readfile(savefilename)
+    local data = HttpService:JSONDecode(jsonData)
+
+--#region global values
+    getgenv().AutoLeave = data.AutoLeave
+    getgenv().AutoReplay = data.AutoReplay
+    getgenv().AutoChallenge = data.AutoChallenge  
+    getgenv().selectedreward = data.selectedreward
+    getgenv().AutoChallengeAll = data.AutoChallengeAll
+    getgenv().disableatuofarm = false
+    getgenv().sellatwave = data.sellatwave 
+    getgenv().autosell = data.autosell
+    getgenv().AutoFarm = data.autofarm
+    getgenv().AutoFarmIC = data.autofarmic
+    getgenv().AutoFarmTP = data.autofarmtp
+    getgenv().AutoLoadTP = data.autoloadtp
+    getgenv().weburl = data.webhook
+    getgenv().autostart = data.autostart
+    getgenv().autoupgrade = data.autoupgrade
+    getgenv().difficulty = data.difficulty
+    getgenv().world = data.world
+    getgenv().level = data.level
+    --getgenv().door = data.door
+
+    getgenv().SpawnUnitPos = data.xspawnUnitPos
+    getgenv().SelectedUnit = data.xselectedUnit
+    getgenv().autoabilities = data.autoabilities
+--#endregion
+end
+---// updates the json file
+--#region update json
+    function Updatejson()
+
+        local xdata = {
+            -- unitname = getgenv().unitname,
+            -- unitid = getgenv().unitid,
+            autoloadtp = getgenv().AutoLoadTP,
+            AutoLeave = getgenv().AutoLeave,
+            AutoReplay = getgenv().AutoReplay,
+            AutoChallenge  = getgenv().AutoChallenge, 
+            selectedreward = getgenv().selectedreward,
+            AutoChallengeAll = getgenv().AutoChallengeAll, 
+            sellatwave = getgenv().sellatwave,
+            autosell = getgenv().autosell,
+            webhook = getgenv().weburl,
+            autofarm = getgenv().AutoFarm,
+            autofarmic = getgenv().AutoFarmIC,
+            autofarmtp = getgenv().AutoFarmTP,
+            autostart = getgenv().autostart,
+            autoupgrade = getgenv().autoupgrade,
+            difficulty = getgenv().difficulty,
+            world = getgenv().world,
+            level = getgenv().level,
+            --door = getgenv().door,
+
+            xspawnUnitPos = getgenv().SpawnUnitPos,
+            xselectedUnit = getgenv().SelectedUnit,
+            autoabilities = getgenv().autoabilities
+        }
+
+        local json = HttpService:JSONEncode(xdata)
+        writefile(savefilename, json)
+    end
+
+    if isfile(savefilename) then 
+
+        local jsonData = readfile(savefilename)
+        local data = HttpService:JSONDecode(jsonData)
+    
+        sex()
+    
+    else
+    --#region CREATES JSON
+        local xdata = {
+            -- unitname = "name",
+            -- unitid = "id",
+            AutoReplay = false,
+            AutoLeave = true,
+            AutoChallenge = false,
+            selectedreward = "star_fruit_random",
+            AutoChallengeAll = false,
+            autoabilities = false,
+            autofarmtp = false,
+            webhook = "",
+            sellatwave = 0,
+            autosell = false,
+            autofarm = false,
+            autofarmic = false,
+            autostart = false,
+            autoloadtp = true,
+            autoupgrade = false,
+            difficulty = "nil",
+            world = "nil",
+            level = "nil",
+            door = "nil",
+        
+            xspawnUnitPos  = {
+                black_clover  = {
+                  UP1  = {
+                    y  = 1.4244641065597535,
+                    x  = -109.30056762695313,
+                    z  = -54.575347900390628
+                 },
+                  UP3  = {
+                    y  = 1.4322717189788819,
+                    x  = -114.2433853149414,
+                    z  = -55.260982513427737
+                 },
+                  UP2  = {
+                    y  = 1.7082736492156983,
+                    x  = -127.53932189941406,
+                    z  = -55.277626037597659
+                 },
+                  UP6  = {
+                    y  = 1.4487617015838624,
+                    x  = -107.07078552246094,
+                    z  = -51.333045959472659
+                 },
+                  UP5  = {
+                    y  = 1.8965977430343629,
+                    x  = -118.5692138671875,
+                    z  = -57.20484161376953
+                 },
+                  UP4  = {
+                    y  = 1.4205386638641358,
+                    x  = -105.46223449707031,
+                    z  = -51.20615005493164
+                 }
+               },
+               hollow_leg = {
+                UP1 = {
+                    x = -168.71795654296875,
+                    y = 36.04443359375, 
+                    z = 564.4705810546875 
+                },
+                UP2 = {
+                    x = -161.105712890625, 
+                    y = 36.04443359375, 
+                    z = 558.4195556640625 
+                },
+                UP3 = {
+                    x = -161.05670166015625, 
+                    y = 36.04443359375, 
+                    z = 546.204833984375 
+                   
+                },
+                UP4 = {
+                    x = -163.51824951171875, 
+                    y = 36.04443359375, 
+                    z = 534.6953735351562 
+                },
+                UP5 = {
+                    x = -170.02479553222656, 
+                    y = 36.04443359375, 
+                    z = 528.9660034179688
+                },
+                UP6 = {
+                    x = -160.92405700683594, 
+                    y = 36.04443359375, 
+                    z = 565.2430419921875 
+                }
+               },
+                Cursed  = {
+                  UP1  = {
+                    y  = 122.78201293945313,
+                    x  = 361.69732666015627,
+                    z  = -89.76468658447266
+                 },
+                  UP3  = {
+                    y  = 122.73872375488281,
+                    x  = 372.2068786621094,
+                    z  = -62.877601623535159
+                 },
+                  UP2  = {
+                    y  = 122.73872375488281,
+                    x  = 391.6465759277344,
+                    z  = -62.87253189086914
+                 },
+                  UP6  = {
+                    y  = 121.5274887084961,
+                    x  = 399.4963684082031,
+                    z  = -60.31044387817383
+                 },
+                  UP5  = {
+                    y  = 121.6282958984375,
+                    x  = 400.8389587402344,
+                    z  = -64.46269226074219
+                 },
+                  UP4  = {
+                    y  = 122.73872375488281,
+                    x  = 362.14788818359377,
+                    z  = -77.3993148803711
+                 }
+               },
+                Sand  = {
+                  UP1  = {
+                    y  = 25.514015197753908,
+                    x  = -919.7685546875,
+                    z  = 290.9293518066406
+                 },
+                  UP3  = {
+                    y  = 25.518001556396486,
+                    x  = -919.7103881835938,
+                    z  = 288.1217346191406
+                 },
+                  UP2  = {
+                    y  = 26.06340980529785,
+                    x  = -920.3797607421875,
+                    z  = 300.7817077636719
+                 },
+                  UP6  = {
+                    y  = 25.528093338012697,
+                    x  = -916.4822998046875,
+                    z  = 287.9609069824219
+                 },
+                  UP5  = {
+                    y  = 25.71731185913086,
+                    x  = -920.7069091796875,
+                    z  = 296.8504943847656
+                 },
+                  UP4  = {
+                    y  = 25.508501052856447,
+                    x  = -919.2952270507813,
+                    z  = 294.7797546386719
+                 }
+               },
+                Namak  = {
+                  UP1  = {
+                    y  = 92.14557647705078,
+                    x  = -2931.182861328125,
+                    z  = -698.5640869140625
+                 },
+                  UP3  = {
+                    y  = 92.5256118774414,
+                    x  = -2950.3916015625,
+                    z  = -697.1671142578125
+                 },
+                  UP2  = {
+                    y  = 93.32953643798828,
+                    x  = -2940.813720703125,
+                    z  = -697.09326171875
+                 },
+                  UP6  = {
+                    y  = 92.16944885253906,
+                    x  = -2946.967041015625,
+                    z  = -710.122802734375
+                 },
+                  UP5  = {
+                    y  = 92.15478515625,
+                    x  = -2947.684326171875,
+                    z  = -699.6248779296875
+                 },
+                  UP4  = {
+                    y  = 92.5256118774414,
+                    x  = -2950.408935546875,
+                    z  = -709.8072509765625
+                 }
+               },
+                Hollow  = {
+                  UP1  = {
+                    y  = 133.10752868652345,
+                    x  = -168.9812774658203,
+                    z  = -692.3645629882813
+                 },
+                  UP3  = {
+                    y  = 133.09632873535157,
+                    x  = -167.3197021484375,
+                    z  = -695.4755249023438
+                 },
+                  UP2  = {
+                    y  = 133.50978088378907,
+                    x  = -160.6356964111328,
+                    z  = -709.1862182617188
+                 },
+                  UP6  = {
+                    y  = 133.08169555664063,
+                    x  = -176.02857971191407,
+                    z  = -691.7825317382813
+                 },
+                  UP5  = {
+                    y  = 133.0151824951172,
+                    x  = -161.20188903808595,
+                    z  = -702.9484252929688
+                 },
+                  UP4  = {
+                    y  = 133.17193603515626,
+                    x  = -172.60714721679688,
+                    z  = -691.3147583007813
+                 }
+               },
+                Ant  = {
+                  UP1  = {
+                    y  = 23.502197265625,
+                    x  = -180.23072814941407,
+                    z  = 2961.130126953125
+                 },
+                  UP3  = {
+                    y  = 23.855152130126954,
+                    x  = -167.0123748779297,
+                    z  = 2954.2958984375
+                 },
+                  UP2  = {
+                    y  = 23.637359619140626,
+                    x  = -205.69203186035157,
+                    z  = 2964.095947265625
+                 },
+                  UP6  = {
+                    y  = 23.31997299194336,
+                    x  = -163.1376953125,
+                    z  = 2959.968017578125
+                 },
+                  UP5  = {
+                    y  = 23.598222732543947,
+                    x  = -170.1063232421875,
+                    z  = 2955.477294921875
+                 },
+                  UP4  = {
+                    y  = 23.855152130126954,
+                    x  = -156.4979705810547,
+                    z  = 2959.6123046875
+                 }
+               },
+                Aot  = {
+                  UP1  = {
+                    y  = 34.25483703613281,
+                    x  = -3016.723388671875,
+                    z  = -682.4714965820313
+                 },
+                  UP3  = {
+                    y  = 34.442054748535159,
+                    x  = -3024.1181640625,
+                    z  = -682.2401123046875
+                 },
+                  UP2  = {
+                    y  = 34.387603759765628,
+                    x  = -3035.071533203125,
+                    z  = -683.9107055664063
+                 },
+                  UP6  = {
+                    y  = 34.25492477416992,
+                    x  = -3019.5390625,
+                    z  = -681.8257446289063
+                 },
+                  UP5  = {
+                    y  = 34.25492477416992,
+                    x  = -3030.930419921875,
+                    z  = -683.3449096679688
+                 },
+                  UP4  = {
+                    y  = 34.442054748535159,
+                    x  = -3013.065185546875,
+                    z  = -681.4302368164063
+                 }
+               },
+                Snowy  = {
+                  UP1  = {
+                    y  = 34.8720588684082,
+                    x  = -2884.6103515625,
+                    z  = -139.17750549316407
+                 },
+                  UP3  = {
+                    y  = 35.055450439453128,
+                    x  = -2871.251708984375,
+                    z  = -131.86231994628907
+                 },
+                  UP2  = {
+                    y  = 34.86832046508789,
+                    x  = -2863.6240234375,
+                    z  = -120.90508270263672
+                 },
+                  UP6  = {
+                    y  = 34.79566192626953,
+                    x  = -2853.62548828125,
+                    z  = -123.30137634277344
+                 },
+                  UP5  = {
+                    y  = 34.79277038574219,
+                    x  = -2853.63232421875,
+                    z  = -119.10173034667969
+                 },
+                  UP4  = {
+                    y  = 34.86832046508789,
+                    x  = -2878.749755859375,
+                    z  = -138.48580932617188
+                 }
+               },
+                Ghoul  = {
+                  UP1  = {
+                    y  = 59.36590576171875,
+                    x  = -3008.964111328125,
+                    z  = -56.00475311279297
+                 },
+                  UP3  = {
+                    y  = 59.03008270263672,
+                    x  = -3008.75732421875,
+                    z  = -58.37107849121094
+                 },
+                  UP2  = {
+                    y  = 59.382938385009769,
+                    x  = -2998.44140625,
+                    z  = -42.68498992919922
+                 },
+                  UP6  = {
+                    y  = 59.03008270263672,
+                    x  = -3009.03125,
+                    z  = -67.12299346923828
+                 },
+                  UP5  = {
+                    y  = 59.03008270263672,
+                    x  = -3007.1025390625,
+                    z  = -52.12919998168945
+                 },
+                  UP4  = {
+                    y  = 59.03008270263672,
+                    x  = -3008.94580078125,
+                    z  = -63.67665100097656
+                 }
+               },
+                Magic  = {
+                  UP1  = {
+                    y  = 7.411101341247559,
+                    x  = -606.7291259765625,
+                    z  = -815.5218505859375
+                 },
+                  UP3  = {
+                    y  = 7.411093711853027,
+                    x  = -589.5305786132813,
+                    z  = -814.8512573242188
+                 },
+                  UP2  = {
+                    y  = 7.413991928100586,
+                    x  = -578.809814453125,
+                    z  = -814.5386962890625
+                 },
+                  UP6  = {
+                    y  = 7.372146129608154,
+                    x  = -605.3615112304688,
+                    z  = -820.8731079101563
+                 },
+                  UP5  = {
+                    y  = 7.413986682891846,
+                    x  = -597.8843383789063,
+                    z  = -814.5377807617188
+                 },
+                  UP4  = {
+                    y  = 7.4139862060546879,
+                    x  = -600.348388671875,
+                    z  = -814.8621215820313
+                 }
+               },
+                Marine  = {
+                  UP1  = {
+                    y  = 25.521255493164064,
+                    x  = -2566.733642578125,
+                    z  = -62.77167892456055
+                 },
+                  UP3  = {
+                    y  = 25.5211124420166,
+                    x  = -2565.930419921875,
+                    z  = -57.89338684082031
+                 },
+                  UP2  = {
+                    y  = 25.210872650146486,
+                    x  = -2560.966796875,
+                    z  = -44.40180969238281
+                 },
+                  UP6  = {
+                    y  = 25.676485061645509,
+                    x  = -2566.796142578125,
+                    z  = -67.01408386230469
+                 },
+                  UP5  = {
+                    y  = 25.5211238861084,
+                    x  = -2563.39990234375,
+                    z  = -63.74509811401367
+                 },
+                  UP4  = {
+                    y  = 24.990556716918947,
+                    x  = -2570.3349609375,
+                    z  = -69.34259033203125
+                 }
+               },
+                thriller_park  = {
+                  UP1  = {
+                    y  = 113.23728942871094,
+                    x  = -224.14295959472657,
+                    z  = -657.738037109375
+                 },
+                  UP3  = {
+                    y  = 109.37400817871094,
+                    x  = -224.78709411621095,
+                    z  = -640.7178955078125
+                 },
+                  UP2  = {
+                    y  = 109.37401580810547,
+                    x  = -229.42715454101563,
+                    z  = -649.636474609375
+                 },
+                  UP6  = {
+                    y  = 109.37400817871094,
+                    x  = -214.7626190185547,
+                    z  = -632.3900146484375
+                 },
+                  UP5  = {
+                    y  = 109.37401580810547,
+                    x  = -230.53053283691407,
+                    z  = -657.9769287109375
+                 },
+                  UP4  = {
+                    y  = 109.37400817871094,
+                    x  = -220.0915985107422,
+                    z  = -636.2127075195313
+                 }
+               },
+               jojo = {
+                UP1  = {
+                    x = -111.61297607421875, 
+                    y = 15.255210876464844, 
+                    z = -513.5579833984375
+                 },
+                  UP3  = {
+                    x = -120.01858520507812, 
+                    y = 15.255210876464844, 
+                    z = -522.66650390625
+                 },
+                  UP2  = {
+                    x = -124.42668151855469, 
+                    y = 15.255210876464844, 
+                    z = -530.7169799804688
+                 },
+                  UP6  = {
+                    x = -120.38040161132812, 
+                    y = 15.255212783813477, 
+                    z = -536.6077270507812
+                 },
+                  UP5  = {
+                    x = -115.62987518310547, 
+                    y = 15.255210876464844, 
+                    z = -518.679931640625                
+                 },
+                  UP4  = {
+                    x = -118.3056411743164, 
+                    y = 15.255210876464844, 
+                    z = -529.9589233398438
+                 }
+               }
+               
+             },
+    
+            xselectedUnit = {
+                U1 = nil,
+                U2 = nil,
+                U3 = nil,
+                U4 = nil,
+                U5 = nil,
+                U6 = nil
+            }
+        
+        }
+    
+        local json = HttpService:JSONEncode(xdata)
+        writefile(savefilename, json)
+    
+        sex()
+    --#endregion
+    end
+
+    local function Equip()
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.unequip_all:InvokeServer()
+        
+        for i = 1, 6 do
+            local unitinfo = getgenv().SelectedUnit["U" .. i]
+            warn(unitinfo)
+            if unitinfo ~= nil then
+                local unitinfo_ = unitinfo:split(" #")
+                task.wait(0.5)
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.equip_unit:InvokeServer(unitinfo_[2])
+            end
+        end
+        Updatejson()
+    end
+
+
+function Placeanywhere()
+	spawn(function()
+        if game.PlaceId == 8349889591 then
+            while getgenv().lol == true do
+                task.wait()
+                while getgenv().placeany == true do
+                    task.wait()
+                    local cl = game:GetService("ReplicatedStorage")
+                    local services = cl:WaitForChild("src").client.Services
+
+                    local placement_service = 
+                        require(services.PlacementServiceClient)
+
+                    local flags = {
+                        place_anywhere = true
+                            }
+
+                    local function connect(f)
+                        task.spawn(function()
+                            while task.wait() do
+                                f()
+                            end
+                        end)
+                    end
+
+                    connect(function()
+                        if flags.place_anywhere then
+                            placement_service.can_place = true
+                        end
+                    end)
+                    getgenv().placeany = false
+                end
             end
         end
     end)
+end
+
+function Halloweenone()
+	spawn(function()
+        while getgenv().Checkcandy == true do
+
+            task.wait(1)
+
+            while Checkcandy == true do
+
+                local stars = game:GetService("Players").LocalPlayer["_stats"]["_resourceHolidayStars"]
+
+                local value = stars.Value
+
+                local shardvalue = tonumber(string.match(value, '%d+'))
+
+                if shardvalue > 149 then
+
+                local args = {
+                    [1] = "capsule_christmas",
+                    [2] = "event",
+                    [3] = "event_shop",
+                    [4] = false
+                }
+
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_item_generic:InvokeServer(unpack(args))
+            end
+
+            task.wait(0.5)
+
+            if game.PlaceId == 8349889591 then
+                task.wait(1)
+                Checkcandy = false
+            end
+            end
+		end
+	end)
+end
+
+function Halloweenten()
+	spawn(function()
+		while Ten == true do
+            task.wait(0.1)
+            while getgenv().Ten == true do
+
+            task.wait(1)
+
+            while Ten == true do
+
+                local stars = game:GetService("Players").LocalPlayer["_stats"]["_resourceHolidayStars"]
+
+                local value = stars.Value
+
+                local shardvalue = tonumber(string.match(value, '%d+'))
+
+                if shardvalue > 1499 then
+
+                local args = {
+                    [1] = "capsule_christmas",
+                    [2] = "event",
+                    [3] = "event_shop",
+                    [4] = true
+                }
+
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_item_generic:InvokeServer(unpack(args))
+            end
+
+            task.wait(0.5)
+
+            if game.PlaceId == 8349889591 then
+                task.wait(1)
+                Ten = false
+            end
+            end
+		end
+	end
+end)
+end
+
+function leave()
+    spawn(function()
+        local args = {
+            [1] = "_lobbytemplateportal29"
+        }
+        
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.request_leave_lobby:InvokeServer(unpack(args))
+    end)
+end
+
+getgenv().checkportalown = true
+
+local ids = {}
+
+
+for _, v in next, game.Players.LocalPlayer.PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren() do
+    if v.Name ~= "portal_christmas" then
+        continue --> if it's not named portal_christmas, skip it
+    end
+    local id = v:FindFirstChild("_uuid_or_id") and v._uuid_or_id.Value --> get the id
+
+    if not table.find(ids, id) then --> if it's not in the table, add it
+        table.insert(ids, id)
+    end
+end
+
+game.Players.LocalPlayer.PlayerGui.items.grid.List.Outer.ItemFrames.ChildAdded:Connect(function(v) --> if a new portal is added, add it to the table
+    if v.Name ~= "portal_christmas" then
+        return --> if it's not named portal_christmas, skip it
+    end
+    local id = v:FindFirstChild("_uuid_or_id") and v._uuid_or_id.Value
+
+    if not table.find(ids, id) then --> if it's not in the table, add it
+        table.insert(ids, id)
+    end
+end)
+
+function PortalW()
+    task.spawn(function()
+        while getgenv().portalown == true do --> if portalown is true, keep running
+            task.wait(0.2) --> wait 0.2 seconds
+            for _, v in next, ids do --> loop through the table
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.use_portal:InvokeServer(tostring(v), {["friends_only"] = getgenv().friendsonlyop}) --> use the portal
+                task.wait()
+                if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"]["portal_depth"].Value > tonumber(getgenv().numberfrfr) then
+                    leave()
+                    table.remove(ids, _)
+                else
+                    if getgenv().highcostportal then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "high_cost" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    task.wait()
+                    if getgenv().shield then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "shield_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().regen then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "regen_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().shortrange then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "short_range" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().tank then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "tank_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().fastportal then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value == "fast_enemies" then
+                            task.wait()
+                            leave()
+                            table.remove(ids, _)
+                        end
+                    end
+                    if getgenv().portalstartp then
+                        if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Active.Value == true then
+                            task.wait(1)
+                            local args = {
+                                [1] = "_lobbytemplateportal29"
+                            }
+                            
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                           
+                        end
+                    end
+                end
+                task.wait(60)
+            end
+        end
+    end)
+end
+
+function Holidaysafes()
+    spawn(function()
+        while getgenv().holidaysafe == true do
+            task.wait(0.2)
+            local Playerpath = game:GetService("Workspace")["_EVENT_CHALLENGES"].Lobbies["_lobbytemplatemaps25"].Players
+
+            table.foreach(Playerpath:GetChildren(), function(i,v)
+                local player = v.Value 
+                
+                if player ~= game.Players.LocalPlayer then 
+                    task.wait(3)
+                    local args = {
+                    [1] = "_lobbytemplatemaps25"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_leave_lobby:InvokeServer(unpack(args))
+            
+                end
+            end)
+        end         
+    end)
+end
+
+
+function Holiday()
+    spawn(function()
+        while getgenv().holidayjoin == true do
+            task.wait(0.2)
+                if game:GetService("Workspace")["_EVENT_CHALLENGES"].Lobbies["_lobbytemplatemaps25"].Active.Value == false then
+                    if game:GetService("Workspace")["_EVENT_CHALLENGES"].Lobbies["_lobbytemplatemaps20"].Challenge.Value ~= "high_cost" then
+                    local args = {
+                        [1] = "_lobbytemplatemaps25"
+                    }
+                    
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                end                   
+            end         
+        end
+    end)
+end
+
+function Holidaypor()
+    spawn(function()
+        while getgenv().holidayjoinpor == true do
+            task.wait(0.2)
+                if game:GetService("Workspace")["_EVENT_CHALLENGES"].Lobbies["_lobbytemplatemaps25"].Active.Value == false then
+                    if game:GetService("Workspace")["_EVENT_CHALLENGES"].Lobbies["_lobbytemplatemaps20"].Challenge.Value ~= "high_cost" then
+                        if game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer.ItemFrames["portal_christmas"] then
+                            return
+                        else
+                        local args = {
+                            [1] = "_lobbytemplatemaps25"
+                        }
+                        
+                        game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                    end
+                end                   
+            end         
+        end
+    end)
+end
+
+getgenv().checkportal = true
+
+function Portal()
+    spawn(function()
+        while getgenv().portaljoin == true do
+            task.wait()
+            if game:GetService("Workspace"):WaitForChild("_PORTALS"):WaitForChild("Lobbies"):WaitForChild("_lobbytemplateportal29"):WaitForChild("PortalReady").Value == true then
+                local args = {
+                    [1] = "_lobbytemplateportal29"
+                }
+
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
+                task.wait()
+                while getgenv().checkportal == true do
+                    task.wait() 
+                    if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
+                        Checkifinpor()
+                        task.wait()
+                        getgenv().checkportal = false
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+function Testweb()
+    spawn(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrkVulcan/Carti-hub/main/Webhook2"))()
+    end)
+end
+
+
+function Sendd()
+    spawn(function()
+        while getgenv().Check == true do
+            task.wait()
+            if game:GetService("Workspace")["_DATA"].GameFinished.Value == true then
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrkVulcan/Carti-hub/main/webhook"))()
+                getgenv().Check = false
+            end
+        end
+    end)
+end
+
+function Autoleave()
+    spawn(function()
+        while getgenv().Check == true do
+            task.wait()
+            if game:GetService("Workspace")["_DATA"].GameFinished.Value == true then
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrkVulcan/Carti-hub/main/webhook"))()
+                getgenv().Check = false
+            end
+        end
+    end)
+end
+
+
+task.spawn(function()
+    while task.wait() do
+		while getgenv().rukia == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "rukia_christmas_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait() do
+		while getgenv().whitebeard == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "whitebeard_christmas_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait() do
+		while getgenv().arminchrist == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "armin_christmas_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end
+end)
+
+
+function Go()
+    spawn(function()
+		while getgenv().Gon == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "gon_adult_halloween_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end)
+end
+
+function Mad()
+    spawn(function()
+		while getgenv().Madara == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "madara_halloween_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end)
+end
+
+
+function Dek()
+    spawn(function()
+		while getgenv().Deku == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "deku_halloween_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end)
+end
+
+
+function Luf()
+    spawn(function()
+		while getgenv().Luffy == true do
+            task.wait(0.2)
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.items.grid.List.Outer.ItemFrames:GetChildren()) do
+                if v.Name == "luffy_halloween_skin" then
+
+                    repeat task.wait() until v:FindFirstChild("_uuid_or_id")
+
+                    local lol = v._uuid_or_id.Value
+
+
+                    local args = {
+                        [1] = {
+                            [1] = tostring(v._uuid_or_id.Value)
+                        }
+                    }
+
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.delete_unique_items:InvokeServer(unpack(args))
+
+                end
+            end
+        end
+    end)
+end
+
+
+
+function Anti()
+    spawn(function()
+		while getgenv().Afk == true do
+            task.wait(0.5)
+            local vu = game:GetService("VirtualUser")
+            game:GetService("Players").LocalPlayer.Idled:connect(function()
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(0.5)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            end)
+        end
+    end)
+end
+
+function Lowserver()
+    spawn(function()
+		while getgenv().Low == true do
+            task.wait(0.1)
+            if game.PlaceId == 8304191830 then
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrkVulcan/Anime-adventuers/main/auto%20ps%20no%20map"))()
+            end
+        end
+    end)
+end
+
+
+function Safemodef()
+    spawn(function()
+		while Lmao == true do
+            task.wait(1)
+            if game.PlaceId == 8349889591 then
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrkVulcan/Carti-hub/main/safemode"))()
+            end
+        end
+    end)
+end
+
+function Inv()
+    setclipboard("Discord.gg/traphub")
+end
+
+if not game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:FindFirstChild("Empty") then
+    local ids = {}
+
+
+    for _, v in next,game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:GetChildren() do
+        if v:IsA("Frame") ~= true then
+            continue --> if it's not a Frame, skip it
+        end
+        if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
+            table.insert(ids, v.infinite.Text)
+        end
+    end
+
+    game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll.ChildAdded:Connect(function(v) --> if a new portal is added, add it to the table
+        if v:IsA("Frame") ~= true then
+            return --> if it's not named Frame, skip it
+        end
+        if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
+            table.insert(ids, v.infinite.Text)
+        end
+    end)
+
+    game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll.ChildRemoved:Connect(function(v) --> if a new portal is added, add it to the table
+        if v:IsA("Frame") ~= true then
+            return --> if it's not named Frame, skip it
+        end
+        if not table.find(ids, v.infinite.Text) then --> if it's not in the table, add it
+            table.insert(ids, v.infinite.Text)
+        end
+    end)
+
+
+    function Dailyinf()
+        task.spawn(function()
+            while getgenv().dailyinffr == true do --> if portalown is true, keep running
+                task.wait(0.2) --> wait 0.2 seconds
+                for _, v in next, ids do --> loop through the table
+                    for _, v in next,game.Players.LocalPlayer.PlayerGui.QuestsUI.Main.Main.Main.Content.infinite.Scroll:GetChildren() do
+                        if v:IsA("Frame") ~= true then
+                            continue --> if it's not a Frame, skip it
+                        end
+                        if v.ClaimQuest.Visible == true then --> if it's not in the table, add it
+                            table.remove(ids, _)
+                        end
+                    end
+                    getgenv().ogpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    for _, v in next, ids do --> loop through the table
+                        if v:find("Namak")then 
+                            if getgenv().Namak == true then
+                            if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                local args = {
+                                    [1] = "_lobbytemplategreen4"
+                                }
+                                
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                local args = {
+                                    [1] = "_lobbytemplategreen4",
+                                    [2] = "namek_infinite",
+                                    [3] = true,
+                                    [4] = "Hard"
+                                }
+                                
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                local args = {
+                                    [1] = "_lobbytemplategreen4"
+                                }
+                                
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                Tp()
+                                break
+                            end
+                            end
+                        elseif v:find("Shiganshinu")then 
+                            if getgenv().Shiganshinu == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "aot_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Snowy")then 
+                            if getgenv().Snowy == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "demonslayer_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Hidden")then 
+                            if getgenv().Hidden == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "naruto_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Marine's")then 
+                            if getgenv().Marine == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "marineford_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Ghoul")then 
+                            if getgenv().Ghoul == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "tokyoghoul_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Hollow")then 
+                            if getgenv().Hollow == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "hueco_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Ant")then 
+                            if getgenv().Ant == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "hxhant_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Magic")then 
+                            if getgenv().Magic == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "magnolia_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Cursed")then 
+                            if getgenv().Cursed == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "jjk_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Clover")then 
+                            if getgenv().Clover == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "clover_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        elseif v:find("Cape")then 
+                            if getgenv().Cape == true then
+                                if game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen4"].Owner.Value == nil or game.Players.LocalPlayer.Name then
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args)) 
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4",
+                                        [2] = "jojo_infinite",
+                                        [3] = true,
+                                        [4] = "Hard"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))   
+                                    local args = {
+                                        [1] = "_lobbytemplategreen4"
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))                              
+                                    Tp()
+                                    break
+                                end
+                            end
+                        end
+                    end
+                    break
+                end
+                break
+            end
+        end)
+    end
+end
+
+function Tp()
+    task.spawn(function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().ogpos
+    end)
+end
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "Carti Hub - Anime Adventures UPD 8 🎄🎅".." - "..tostring(identifyexecutor()),
+	LoadingTitle = "Carti Hub",
+	LoadingSubtitle = "by Vulcan",
+	ConfigurationSaving = {
+		Enabled = true,
+        FolderName = ("Cartihub"), -- Create a custom folder for your hub/game
+		FileName = "Carti Hub"
+	},
+	KeySystem = false, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "Carti Hub",
+		Subtitle = "Key System",
+		Note = "Join the discord (discord.gg/traphub)",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "Trapgoeshard"
+	}
+})
+
+Rayfield:Notify({
+    Title = "Carti hub",
+    Content = "Carti Hub Loaded!",
+    Duration = 3,
+})
+local Tab = Window:CreateTab("Main")
+
+local Section = Tab:CreateSection("Unit Select")
+
+function Checkifinpor()
+    task.spawn(function()
+        while task.wait() do
+          if game.Players.LocalPlayer.AlreadyInLobby.Value == false then 
+            return
+          end
+            while game.Players.LocalPlayer.AlreadyInLobby.Value == true do
+              task.wait()
+              getgenv().pormap = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
+              getgenv().pormodifier = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value
+              getgenv().ownerofpor = tostring(game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Owner.Value)
+              if string.find(getgenv().pormap, "namek") then
+                getgenv().pormap = "Planet Namak"
+              elseif string.find(getgenv().pormap, "aot") then
+                getgenv().pormap = "Attack On Titan"
+              elseif string.find(getgenv().pormap, "demonslayer") then
+                getgenv().pormap = "Demon Slayer"
+              elseif string.find(getgenv().pormap, "naruto") then
+                getgenv().pormap = "Hidden Sand Village"
+              elseif string.find(getgenv().pormap, "marine") then
+                getgenv().pormap = "Marine's Ford"
+              elseif string.find(getgenv().pormap, "tokyoghoul") then
+                getgenv().pormap = "Ghoul City"
+              elseif string.find(getgenv().pormap, "hueco") then
+                getgenv().pormap = "Hollows World"
+              elseif string.find(getgenv().pormap, "hxhant") then
+                getgenv().pormap = "Ant Kingdom"
+              elseif string.find(getgenv().pormap, "magnolia") then
+                getgenv().pormap = "Magic Town"
+              elseif string.find(getgenv().pormap, "jjk") then
+                getgenv().pormap = "Cursed Academy"
+              elseif string.find(getgenv().pormap, "clover") then
+                getgenv().pormap = "Clover Kingdom"
+              elseif string.find(getgenv().pormap, "jojo") then
+                getgenv().pormap = "Cape Canaveral"
+              end
+              if string.find(getgenv().pormodifier, "fast") then
+                getgenv().pormodifier = "Fast Enemies"
+              elseif string.find(getgenv().pormodifier, "high") then
+                getgenv().pormodifier = "High Cost"
+              elseif string.find(getgenv().pormodifier, "shield") then
+                getgenv().pormodifier = "Shield Enemies" 
+              elseif string.find(getgenv().pormodifier, "regen") then
+                getgenv().pormodifier = "Regen Enemies"
+              elseif string.find(getgenv().pormodifier, "short") then
+                getgenv().pormodifier = "Short Range Units"
+              elseif string.find(getgenv().pormodifier, "tank") then
+                getgenv().pormodifier = "Tank Enemies"
+                end
+                if game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value ~= nil or "" then 
+                  if string.find(getgenv().pormap, "winter_1") then
+                    getgenv().pormapact = "Act 1"
+                  elseif string.find(getgenv().pormap, "winter_2") then
+                    getgenv().pormapact = "Act 2"
+                  elseif string.find(getgenv().pormap, "winter_3") then
+                    getgenv().pormapact = "Act 3"
+                  elseif string.find(getgenv().pormap, "winter_4") then
+                    getgenv().pormapact = "Act 4"
+                  elseif string.find(getgenv().pormap, "winter_5") then
+                    getgenv().pormapact = "Act 5"
+                  elseif string.find(getgenv().pormap, "winter_6") then
+                    getgenv().pormapact = "Act 6"
+                  end
+                elseif getgenv().pormapact == nil or "" then 
+                  getgenv().pormapact = "Error Getting Act Number"
+                end
+              if getgenv().ownerofpor ~= "nil" then 
+                task.wait()
+                getgenv().pormul = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Timer.Value
+                getgenv().pordif = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"]["lobby_difficulty_scale"].Value
+                getgenv().poract = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
+                Window:Prompt({
+                    Title = 'Portal Check',
+                    SubTitle = 'Joined Lobby!',
+                    Content = 'You Have Joined A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nTime Until Start: '..tostring(getgenv().pormul)..'\nGame Map: '..tostring(getgenv().pormap).." Act "..tostring((string.match(getgenv().poract, '%d[%d.,]*'))).."\nGame Modifier: "..tostring(getgenv().pormodifier)..'\nPortal Difficulty Scale: '..tostring(string.format("%2.1f", getgenv().pordif))..'x',
+                    Actions = {
+                        Accept = {
+                            Name = 'Okay',
+                            Callback = function()
+                            end,
+                        }
+                    }
+                })
+              end
+        end
+    end
+end)
+end
+
+
+function Checkifinporbut()
+    if game.Players.LocalPlayer.AlreadyInLobby.Value == true then
+        Window:Prompt({
+            Title = 'Portal Check',
+            SubTitle = 'Joined Lobby!',
+            Content = '\nYou Are In A Portal\n\nPortal Owner: '..getgenv().ownerofpor..'\nGame Map: '..tostring(getgenv().pormap).."\nGame Modifier: "..tostring(getgenv().pormodifier),
+            Actions = {
+                Accept = {
+                    Name = 'Okay',
+                    Callback = function()
+                        -- You know what a callback is...
+                    end,
+                }
+            }
+        })
+    else
+        Window:Prompt({
+            Title = 'Interface Prompt',
+            SubTitle = 'Portal Check',
+            Content = 'Not Currently In A Portal',
+            Actions = {
+                Accept = {
+                    Name = 'Okay',
+                    Callback = function()
+                        -- You know what a callback is...
+                    end,
+                }
+            }
+        })
+    end
+end
+
+if getgenv().SelectedUnit == nil then getgenv().SelectedUnit = {} end
+
+local Dropdown1 = Tab:CreateDropdown({
+    Name = "Unit 1",
+    Options = Units,
+    CurrentOption = getgenv().SelectedUnit['U1'] or "",-- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().SelectedUnit["U1"] = Option
+        Equip()
+    end,
+ })
+
+ local Dropdown11 = Tab:CreateDropdown({
+    Name = "Unit 2",
+    Options = Units,
+    CurrentOption = getgenv().SelectedUnit['U2'] or "",-- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().SelectedUnit["U2"] = Option
+        Equip()
+    end,
+ })
+
+ local Dropdown111 = Tab:CreateDropdown({
+    Name = "Unit 3",
+    Options = Units,
+    CurrentOption = getgenv().SelectedUnit['U3'] or "", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().SelectedUnit["U3"] = Option
+        Equip()
+    end,
+ })
+
+ local Dropdown1111 = Tab:CreateDropdown({
+    Name = "Unit 4",
+    Options = Units,
+    CurrentOption = getgenv().SelectedUnit['U4'] or "", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().SelectedUnit["U4"] = Option
+        Equip()
+    end,
+ })
+ _G.u5 = nil
+ _G.u6 = nil
+ if tonumber(game.Players.LocalPlayer.Character.Head["_overhead"].Frame["Level_Frame"].Level.Text) >= 20 then
+    _G.u5 = Tab:CreateDropdown({
+        Name = "Unit 5",
+        Options = Units,
+        CurrentOption = getgenv().SelectedUnit['U5'] or "", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Option)
+            getgenv().SelectedUnit["U5"] = Option
+            Equip()
+        end,
+     })
+ end
+
+ if tonumber(game.Players.LocalPlayer.Character.Head["_overhead"].Frame["Level_Frame"].Level.Text) >= 50 then
+    _G.u6 = Tab:CreateDropdown({
+        Name = "Unit 6",
+        Options = Units,
+        CurrentOption = getgenv().SelectedUnit['U6'] or "", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Option)
+            getgenv().SelectedUnit["U6"] = Option
+            Equip()
+        end,
+     })
+ end
+
+
+ local Button = Tab:CreateButton({
+    Name = "Clear All",
+    Info = "Will Clear Your Selected Units",
+    Callback = function()
+    Dropdown1:Set("") -- The new option value
+    Dropdown11:Set("") -- The new option value
+    Dropdown111:Set("") -- The new option value
+    Dropdown1111:Set("") -- The new option value
+    if _G.u5 ~= nil then _G.u5:Set("") end -- The new option value
+    if _G.u6 ~= nil then _G.u5:Set("") end -- The new option value
+    end,
+ })
+ 
+ local function Check(x, y)
+    for i, v in ipairs(game:GetService("Players").LocalPlayer.PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
+        if v:IsA("ImageButton") then
+            if v.EquippedList.Equipped.Visible == true then
+                if v.Main.petimage:GetChildren()[2].Name == x then
+                    getgenv().SelectedUnit["U"..tostring(y)] = tostring(v.name.Text.." #"..v._uuid.Value)
+                    Updatejson()
+                    return true 
+                end
+            end
+        end
+    end
+end
+
+
+local Button = Tab:CreateButton({
+    Name = "Use Selected Units",
+    Info = "Will Set The DropDowns To Your Selected Units\n(Dropdown Text May Not Update But It Still Worked)",
+    Callback = function()
+        for i, v in ipairs(game:GetService("Players").LocalPlayer.PlayerGui["spawn_units"].Lives.Frame.Units:GetChildren()) do
+            if v:IsA("ImageButton") then
+                local unitxx = v.Main.petimage.WorldModel:GetChildren()[1]
+                if unitxx ~= nil then
+                    if Check(unitxx.Name,v) then
+                    end
+                end
+            end
+        end
+    end,
+ })
+
+ local Section = Tab:CreateSection("Auto Farm")
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto Place Units",
+    
+    CurrentValue = false,
+    Flag = "AutoPlace", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().AutoFarm = Value
+        Updatejson()
+    end,
+ })
+
+coroutine.resume(coroutine.create(function()
+    while task.wait(1.5) do
+        local _wave = game:GetService("Workspace"):WaitForChild("_wave_num")
+        
+        if getgenv().AutoFarm and not getgenv().disableatuofarm then
+            if game.PlaceId ~= 8304191830 then
+                x = 1
+                y = 0.7
+                z = 1
+                if game.Workspace._map:FindFirstChild("namek mushroom model") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Namak"]["UP" .. i]
+    
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("houses_new") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Aot"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y , pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("Snow Particles") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Snowy"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("sand_gate") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Sand"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("icebergs") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Marine"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("Helicopter Pad") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Ghoul"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("Bones/dust") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Hollow"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("Ant Nest") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Ant"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("light poles") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Magic"]["UP" .. i]
+
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("LanternsGround") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["Cursed"]["UP" .. i]
+    
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("pumpkins") then 
+                        for i = 1, 6 do
+                            local unitinfo = getgenv().SelectedUnit["U" .. i]
+                            if unitinfo ~= nil then
+                                local unitinfo_ = unitinfo:split(" #")
+                                local pos = getgenv().SpawnUnitPos["thriller_park"]["UP" .. i]
+        
+                                --place units 0
+                                local args = {
+                                    [1] = unitinfo_[2],
+                                    [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                                }
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+        
+                                --place units 1
+                                local args = {
+                                    [1] = unitinfo_[2],
+                                    [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                                }
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+        
+                                --place units 2 
+                                local args = {
+                                    [1] = unitinfo_[2],
+                                    [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                                }
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+        
+                                --place units 3 
+                                local args = {
+                                    [1] = unitinfo_[2],
+                                    [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                                }
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+        
+                                --place units 4
+                                local args = {
+                                    [1] = unitinfo_[2],
+                                    [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                                }
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+        
+                                --place units 5
+                                local args = {
+                                    [1] = unitinfo_[2],
+                                    [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                                }
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                            end
+                        end
+                elseif game.Workspace._map:FindFirstChild("skeleton") then 
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["black_clover"]["UP" .. i]
+    
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("graves") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["hollow_leg"]["UP" .. i]
+    
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                elseif game.Workspace._map:FindFirstChild("SpaceCenter") then
+                    for i = 1, 6 do
+                        local unitinfo = getgenv().SelectedUnit["U" .. i]
+                        if unitinfo ~= nil then
+                            local unitinfo_ = unitinfo:split(" #")
+                            local pos = getgenv().SpawnUnitPos["jojo"]["UP" .. i]
+    
+                            --place units 0
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 1
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 2 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 3 
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 4
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+    
+                            --place units 5
+                            local args = {
+                                [1] = unitinfo_[2],
+                                [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
+                            }
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
+                        end
+                    end
+                end
+            end
+        end
+    end
 end))
+--#region ----------------------
+--#endregion
+
+local Tab = Window:CreateTab("Fuse Units")
+
+local Paragraph = Tab:CreateParagraph({Title = "Auto Fuse Units", Content = "Select The Main Unit And The Rarity Of The Units Going Into It\n(Lock Units That You Dont Want To Acidenallty Fuse)"})
+
+local Section = Tab:CreateSection("Auto Fuse Config")
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Unit To Fuse Into",
+    Options = Units,
+    CurrentOption = getgenv().unittofuse or "",-- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().unittofuse = Option
+        local unitinfo_ = Option:split(" #")
+        getgenv().unittofusefr = unitinfo_[2]
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Auto Fuse Rarity's",
+    Options = {"Rare","Epic","Legendary"},
+    CurrentOption = "Rare",
+    Flag = "Unitfusetograrity", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().UnitToFuse = Option
+    end,
+ }) 
+
+ local Section = Tab:CreateSection("Auto Fuse")
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto Fuse Units",
+    CurrentValue = false,
+    Flag = "AutoPlace", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Unitfusetog = Value
+    end,
+ })
+
+
+getgenv().UnitCache = {}
+
+for _, Module in next, game:GetService("ReplicatedStorage"):WaitForChild("src"):WaitForChild("Data"):WaitForChild("Units"):GetDescendants() do
+    if Module:IsA("ModuleScript") and Module.Name ~= "UnitPresets" then
+        for UnitName, UnitStats in next, require(Module) do
+            getgenv().UnitCache[UnitName] = UnitStats
+        end
+    end
+end
+
+
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+        if getgenv().Unitfusetog then
+    
+            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
+                if v.Name == "CollectionUnitFrame" then
+                    repeat task.wait() until v:FindFirstChild("name")
+                    for _, Info in next, getgenv().UnitCache do
+                        if Info.name == v.name.Text and Info.rarity == getgenv().UnitToFuse then
+                            local args = {
+                                [1] = getgenv().unittofusefr,
+                                [2] = {
+                                    [1] = tostring(v._uuid.Value)
+                                }
+                            }
+                            
+                            game:GetService("ReplicatedStorage").endpoints.client_to_server.feed_units:InvokeServer(unpack(args))
+                            
+                         end
+                    end
+                end
+            end
+            
+        end
+    end
+    end))
+
+
+local Tab = Window:CreateTab("Daily Inf")
+
+local Paragraph = Tab:CreateParagraph({Title = "Daily Infinite Info", Content = "Toggle On The Maps You Want Auto Daily To Join\n(Do Not Toggle On Maps You Havent Unlocked Infinite Mode For Yet)"})
+
+local Section = Tab:CreateSection("Daily Inf Config")
+
+local Toggle = Tab:CreateToggle({
+    Name = "Namak (DBZ)",
+    CurrentValue = getgenv().Namak,
+    Flag = "namakunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Namak = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Aot (Shiganshinu)",
+    CurrentValue = getgenv().Shiganshinu,
+    Flag = "shiganunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Shiganshinu = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Snowy (Demon Slayer)",
+    CurrentValue = getgenv().Snowy,
+    Flag = "snowyunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Snowy = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Hidden (Naruto)",
+    CurrentValue = getgenv().Hidden,
+    Flag = "hiddenunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Hidden = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Marine's Ford (One Piece)",
+    CurrentValue = getgenv().Marine,
+    Flag = "marineunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Marine = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Ghoul (Tokyo Ghoul)",
+    CurrentValue = getgenv().Ghoul,
+    Flag = "marineunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Ghoul = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Hollow (Bleach)",
+    CurrentValue = getgenv().Hollow,
+    Flag = "hollowunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Hollow = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Ant (HXH)",
+    CurrentValue = getgenv().Ant,
+    Flag = "Antunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Ant = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Magic (Fairy Tale)",
+    CurrentValue = getgenv().Magic,
+    Flag = "magicunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Magic = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Cursed (JJK)",
+    CurrentValue = getgenv().Cursed,
+    Flag = "jjkunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Cursed = Value
+    end,
+ })
+
+ local Toggle1 = Tab:CreateToggle({
+    Name = "Clover (Black Clover)",
+    CurrentValue = getgenv().Clover,
+    Flag = "cloverunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Clover = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Cape (Jojo's)",
+    CurrentValue = getgenv().Cape,
+    Flag = "capeunlocked", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().Cape = Value
+    end,
+ })
+
+ local Section = Tab:CreateSection("Daily Toggle")
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto Daily Infinite",
+    Info = "Toggle On To Start Auto Daily Infs",
+    CurrentValue = false,
+    Flag = "dailyinfs", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().dailyinffr = Value
+        Dailyinf()
+    end,
+ })
+
+local Tab = Window:CreateTab("TP's")
+
+local Section = Tab:CreateSection("Main")
+
+local Paragraph = Tab:CreateParagraph({Title = "How To Use Carti Hub", Content = "\nAll Teleports Are Meant To Work With TrapHub But Can Be Used Alone!\nMake Sure To Use Macro A Built Into TrapHub! Or Use Auto Farm From Carti Hubdm"})
+
+local Button = Tab:CreateButton({
+	Name = "Click To Copy The Invite Link for TrapHub!!",
+	Callback = function()
+		Inv()
+	end,
+})
+
+local Section = Tab:CreateSection("Player Teleports")
+local Button = Tab:CreateButton({
+	Name = "Click To Teleport To Event Area",
+	Callback = function()
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Model.Part.CFrame
+	end,
+})
+local Section = Tab:CreateSection("Raid")
+
+local Slider = Tab:CreateSlider({
+    Name = "Minutes Before Raid",
+    Info = "How Many Minutes Before The Raid Starts Do You Want It To Leave", -- Speaks for itself, Remove if none.
+    Range = {1, 30},
+    Increment = 1,
+    Suffix = "Minute(s)",
+    CurrentValue = 5,
+    Flag = "minsbeforeraid", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().timebeforeraid = Value
+    end,
+ })
 
 task.spawn(function()
     while task.wait() do
-        if getgenv().autojoinpors == true then
-            for _, v in next, game:WaitForChild("Workspace"):WaitForChild("_PORTALS"):WaitForChild("Lobbies"):GetChildren() do
-                if tostring(v.Owner.Value) == tostring(getgenv().friend) then 
-                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(tostring(v))
-                end
-            end
+        if getgenv().timebeforeraid == nil then
+            getgenv().timebeforeraid = 5
         end
+        getgenv().timegmt = tonumber(os.date('!%H'))
+        getgenv().timegmtm = tonumber(os.date('!%m'))
+        getgenv().timeNow = os.date("*t")
+        getgenv().timeminnowrf = tonumber(getgenv().timeNow.min) - tonumber(getgenv().timebeforeraid)
     end
 end)
 
-task.spawn(function()
-    while task.wait() do
-        if getgenv().autojoinporsnop == true then
-            for _, v in next, game:WaitForChild("Workspace"):WaitForChild("_PORTALS"):WaitForChild("Lobbies"):GetChildren() do
-                if tostring(v.Owner.Value) ~= "nil" then 
-                    game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(tostring(v))
-                end
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Leave When Raid",
+    Info = "Will Auto Leave When A Raid Starts And Turn Off All Farming Features",
+	CurrentValue = false,
+	Flag = "raidsafemode", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        if getgenv().timegmt == 12 or 4 or 8 then
+            if getgenv().timeminnowrf == getgenv().timegmtm then 
+                Rayfield.Flags["holiday"]:Set(false)
+                Rayfield.Flags["holidaypor"]:Set(false)
+                Rayfield.Flags["holidaysafe"]:Set(false)
+                Rayfield.Flags["dailyinfs"]:Set(false)
+                Rayfield.Flags["portal"]:Set(false)
+                Rayfield.Flags["portalown"]:Set(false)
+                Rayfield.Flags["portalstartserverhop"]:Set(false)
+                game:GetService("TeleportService"):Teleport(8304191830)
             end
         end
-    end
-end)
+	end,
+})
 
--- UI Settings
-local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
+local Section = Tab:CreateSection("Main Teleports")
 
--- I set NoUI so it does not show up in the keybinds menu
-MenuGroup:AddButton('Unload', function() Library:Unload() end)
-MenuGroup:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'Menu keybind' }) 
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Holiday Challenge",
+    Info = "Will Auto Join The New Holiday Challenge",
+	CurrentValue = false,
+	Flag = "holiday", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().holidayjoin = Value
+		if Value == true then
 
-Library.ToggleKeybind = Options.MenuKeybind -- Allows you to have a custom keybind for the menu
+            Rayfield:Notify({
+                Title = "Success!",
+                Content = "Auto Holiday Challenge Is Now On, Just Sit Back and Watch The Magic Happen :)",
+                Duration = 2,
+            })
 
--- Addons:
--- SaveManager (Allows you to have a configuration system)
--- ThemeManager (Allows you to have a menu theme system)
+			Holiday()
+		end
+	end,
+})
 
--- Hand the library over to our managers
-ThemeManager:SetLibrary(Library)
-SaveManager:SetLibrary(Library)
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Holiday No Portals",
+    Info = "Will Auto Join The New Holiday Challenge If You Have No Portals",
+	CurrentValue = false,
+	Flag = "holidaypor", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().holidayjoinpor = Value
+		if Value == true then
 
--- Ignore keys that are used by ThemeManager. 
--- (we dont want configs to save themes, do we?)
-SaveManager:IgnoreThemeSettings() 
+            Rayfield:Notify({
+                Title = "Success!",
+                Content = "Auto Holiday Challenge Is Now On, Just Sit Back and Watch The Magic Happen :)",
+                Duration = 2,
+            })
 
--- Adds our MenuKeybind to the ignore list 
--- (do you want each config to have a different menu key? probably not.)
--- use case for doing it this way: 
--- a script hub could have themes in a global folder
--- and game configs in a separate folder per game
-ThemeManager:SetFolder('Cartihub')
-SaveManager:SetFolder('Cartihub')
+			Holidaypor()
+		end
+	end,
+})
 
--- Builds our config menu on the right side of our tab
-SaveManager:BuildConfigSection(Tabs['UI Settings']) 
+local Toggle = Tab:CreateToggle({
+	Name = "Holiday Safe Mode ",
+    Info = "Will Leave If Someoe Joins Your Holiday Lobby",
+	CurrentValue = false,
+	Flag = "holidaysafe", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().holidaysafe = Value
+		if Value == true then
 
--- Builds our theme menu (with plenty of built in themes) on the left side
--- NOTE: you can also call ThemeManager:ApplyToGroupbox to add it to a specific groupbox
-ThemeManager:ApplyToTab(Tabs['UI Settings'])
+            Rayfield:Notify({
+                Title = "Success!",
+                Content = "Auto Holiday Challenge Is Now On, Just Sit Back and Watch The Magic Happen :)",
+                Duration = 2,
+            })
 
--- You can use the SaveManager:LoadAutoloadConfig() to load a config 
--- which has been marked to be one that auto loads!
-SaveManager:LoadAutoloadConfig()
+			Holidaysafes()
+		end
+	end,
+})
+
+local Tab = Window:CreateTab("Portals")
+
+local Section = Tab:CreateSection("Main")
+
+local Paragraph = Tab:CreateParagraph({Title = "How To Use The Portal Filters", Content = "\nEach Number Represents A Tier, If You Were To Select 1 Tier In The Slider It Would Only Join Portals With A Tier Equal Too Or Below 1. If You Were To Select 7 Tier In The Slider It Would Only Join Portals With A Tier Equal Too Or Below 7 Etc..."})
+
+local Section = Tab:CreateSection("Global Portals")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Join Portals",
+	CurrentValue = false,
+    Info = "Will Join A Portal If It Is Spawned (Anyones Portal)",
+	Flag = "portal", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().portaljoin = Value
+		if Value == true then
+
+            Rayfield:Notify({
+                Title = "Success!",
+                Content = "Auto Portal Join Is Now On, Just Sit Back and Watch The Magic Happen :)",
+                Duration = 2,
+            })
+
+			Portal()
+		end
+	end,
+})
+
+local Button = Tab:CreateButton({
+    Name = "Check Portal",
+    Info = "Click This To See If Your In A Portal.", -- Speaks for itself, Remove if none.
+    Interact = 'Button',
+    Callback = function()
+      getgenv().pormap = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Level.Value
+      getgenv().pormodifier = game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Challenge.Value
+      getgenv().ownerofpor = tostring(game:GetService("Workspace")["_PORTALS"].Lobbies["_lobbytemplateportal29"].Owner.Value)
+      if string.find(getgenv().pormap, "namek") then
+        getgenv().pormap = "Planet Namak"
+      elseif string.find(getgenv().pormap, "aot") then
+        getgenv().pormap = "Attack On Titan"
+      elseif string.find(getgenv().pormap, "demonslayer") then
+        getgenv().pormap = "Demon Slayer"
+      elseif string.find(getgenv().pormap, "naruto") then
+        getgenv().pormap = "Hidden Sand Village"
+      elseif string.find(getgenv().pormap, "marine") then
+        getgenv().pormap = "Marine's Ford"
+      elseif string.find(getgenv().pormap, "tokyoghoul") then
+        getgenv().pormap = "Ghoul City"
+      elseif string.find(getgenv().pormap, "hueco") then
+        getgenv().pormap = "Hollows World"
+      elseif string.find(getgenv().pormap, "hxhant") then
+        getgenv().pormap = "Ant Kingdom"
+      elseif string.find(getgenv().pormap, "magnolia") then
+        getgenv().pormap = "Magic Town"
+      elseif string.find(getgenv().pormap, "jjk") then
+        getgenv().pormap = "Cursed Academy"
+      elseif string.find(getgenv().pormap, "clover") then
+        getgenv().pormap = "Clover Kingdom"
+      elseif string.find(getgenv().pormap, "jojo") then
+        getgenv().pormap = "Cape Canaveral"
+      end
+      if string.find(getgenv().pormodifier, "fast") then
+        getgenv().pormodifier = "Fast Enemies"
+      elseif string.find(getgenv().pormodifier, "high") then
+        getgenv().pormodifier = "High Cost"
+      elseif string.find(getgenv().pormodifier, "shield") then
+        getgenv().pormodifier = "Shield Enemies" 
+      elseif string.find(getgenv().pormodifier, "regen") then
+        getgenv().pormodifier = "Regen Enemies"
+      elseif string.find(getgenv().pormodifier, "short") then
+        getgenv().pormodifier = "Short Range Units"
+      elseif string.find(getgenv().pormodifier, "tank") then
+        getgenv().pormodifier = "Tank Enemies"
+        end
+      Checkifinporbut()
+    end,
+  })
+
+local Section = Tab:CreateSection("Auto Portal Options")
+
+local Slider1 = Tab:CreateSlider({
+    Name = "Select Ignore Tiers Above",
+    Info = "Will Only Join Maps Which Are Lower Than Or Equal To This Number", -- Speaks for itself, Remove if none.
+    Range = {0, 20},
+    Increment = 1,
+    Suffix = "Tier",
+    CurrentValue = 1,
+    Flag = "TierSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().numberfrfr = Value
+    end,
+ })
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Friends Only?",
+    Info = "Will Set Portals That You Use To Friends Only (Only Friends Can Join The Portal)",
+    Options = {"true","false"},
+    CurrentOption = "false",
+    Flag = "Dropdownfriendsonly", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().friendsonlyop = Option
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+	Name = "Auto Start Portals",
+    Info = "Will Auto Start Portals That You Own After You Place Them",
+	CurrentValue = false,
+	Flag = "portalstart", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().portalstartp = Value
+	end,
+})
+
+local Slider1 = Tab:CreateSlider({
+    Name = "Auto Server Hop Time",
+    Info = "Will Server Hop After This Many Minutes", -- Speaks for itself, Remove if none.
+    Range = {0, 20},
+    Increment = 1,
+    Suffix = "Minute(s)",
+    CurrentValue = 1,
+    Flag = "serverhopSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().numberserverhop = Value
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+	Name = "Auto Server Hop",
+    Info = "Will Server Hop After The Amt Of Minutes That You Selected Have Passed",
+	CurrentValue = false,
+	Flag = "portalstartserverhop", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        task.wait(tonumber(getgenv().numberserverhop) * 60)
+		if game.PlaceId == 8304191830 then
+            game:GetService("TeleportService"):Teleport(8304191830, LocalPlayer)
+        end
+	end,
+})
+
+ local Section = Tab:CreateSection("Portal Modifier Filter")
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore High Cost Portals?",
+    Info = "Will Set Portals To Work On If They Arent High Cost Modifier",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownhighcost", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().highcostportal = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Shield Enemy Portals?",
+    Info = "Will Set Portals To Work On If They Arent Shield Enemy Modifier",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownshield", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().shield = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Regen Enemy Portals?",
+    Info = "Will Set Portals To Work On If They Arent Regen Enemy Modifier",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownregen", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().regen = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Short Range Units Portals?",
+    Info = "Will Set Portals To Work On If They Arent Short Range Modifier",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownshortrange", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().shortrange = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore High Cost Units Portals?",
+    Info = "Will Set Portals To Work On If They Arent High Cost Modifier",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdowntank", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().tank = Option
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Ignore Fast Enemy Portals?",
+    Info = "Will Set Portals To Work On If They Arent Fast Enemy Modifier",
+    Options = {"true","false"},
+    CurrentOption = "true",
+    Flag = "Dropdownfastportal", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().fastportal = Option
+    end,
+ })
+
+ local Section = Tab:CreateSection("Start Farm")
+
+ local Toggle = Tab:CreateToggle({
+	Name = "Auto Use Portals",
+	CurrentValue = false,
+	Flag = "portalown", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().portalown = Value
+		if Value == true then
+			PortalW()
+		end
+	end,
+})
+
+local Tab = Window:CreateTab("Server Hop")
+
+local Section = Tab:CreateSection("Main")
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Join High Or Low Player Servers",
+    Options = {"High","Low"},
+    CurrentOption = "Low",
+    Flag = "highOrLowPlayerServers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().horlplayerserv = Option
+    end,
+ })
+
+local Slider = Tab:CreateSlider({
+    Name = "Minimum Amt Of Players",
+    Info = "Set The Minimum Amt Of Player For Server Hop (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 30},
+    Increment = 1,
+    Suffix = "Player(s)",
+    CurrentValue = 1,
+    Flag = "Minplayers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().minplayers = Value
+    end,
+ })
+
+ local Slider = Tab:CreateSlider({
+    Name = "Maximum Amt Of Players",
+    Info = "Set The Maximum Amt Of Player For Server Hop (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 30},
+    Increment = 1,
+    Suffix = "Player(s)",
+    CurrentValue = 1,
+    Flag = "MaxPlayers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().maxplayers = Value
+    end,
+ })
+
+ local Dropdown = Tab:CreateDropdown({
+    Name = "Exclude Full Servers",
+    Info = "Will Filter Any Servers That Are Full (At Server's Max Players)",
+    Options = {"true","flase"},
+    CurrentOption = "true",
+    Flag = "Excludefullservers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        getgenv().Excludefull = Option
+    end,
+ })
+
+ local Slider = Tab:CreateSlider({
+    Name = "Maximum Amt Of Ping",
+    Info = "Will Filter Any Servers Whose Ping Is Higher Than This (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 500},
+    Increment = 5,
+    Suffix = "Ping",
+    CurrentValue = 100,
+    Flag = "MaxPing", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().maxping = Value
+    end,
+ })
+
+ local Slider = Tab:CreateSlider({
+    Name = "Minimum Amt Of FPS",
+    Info = "Will Filter Any Servers Whose FPS Is Not Atleast This (0 Is Unused)", -- Speaks for itself, Remove if none.
+    Range = {0, 300},
+    Increment = 5,
+    Suffix = "Fps",
+    CurrentValue = 60,
+    Flag = "minfps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        getgenv().minfps = Value
+    end,
+ })
+
+ local Button = Tab:CreateButton({
+    Name = "Server Hop",
+    Info = "Click To Join A Server With The Preferred Settings", -- Speaks for itself, Remove if none.
+    Interact = 'Button',
+    Callback = function()
+        local rejoinPreferred = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ybestfr/lmaoez-/main/prefserver"))
+        if getgenv().horlplayerserv == "High" then 
+            getgenv().horlplayerserv = "desc"
+        end
+        if getgenv().horlplayerserv == "Low" then 
+            getgenv().horlplayerserv = "asc"
+        end
+        rejoinPreferred({
+        SizeSort = getgenv().horlplayerserv, -- 'asc' or 'desc' - asc will prefer smallest, desc will prefer largest (num players). default is asc.
+        MinPlayers = tonumber(getgenv().minplayers), -- 0 is unused, >0 will filter servers with less players than this number
+        MaxPlayers = tonumber(getgenv().maxplayers), -- 0 is unused, >0 will filter servers with more players than this number
+        ExcludeFull = getgenv().Excludefull, -- will filter any servers that are full (at server's max players)
+        ExcludeSame = true, -- will filter the current server- to ensure you go someplace else
+        MinFps = tonumber(getgenv().maxping), -- 0 is unused, >0 will filter any servers that do not have at least this FPS
+        MaxPing = tonumber(getgenv().minfps), -- 0 is unused, >0 will filter any servers whose ping is higher than this
+        -- don't mess with these unless you understand what a weighted sort is
+        FpsSortWeight = 1, -- weight to apply to fps for sorting. higher value makes better (higher) fps impact sort more
+        PingSortWeight = 1, -- weight to apply to ping for sorting. higher value makes better (lower) ping impact sort more
+        SizeSortWeight = 5, -- weight for size (num players) for sorting. higher value makes preferred size (asc/desc) impact sort more
+        -- you probably don't need these
+        PrintVerbose = false, -- if true will output much more, including full server list sorted
+        PrintPrefixTime = false, -- if true will prefix all prints with time hh:mm:ss.SSS
+        PrintUseConsoleWindow = false -- if true will use a separate console window for all print output (if exploit can do that, or falls back to print)
+        })
+    end,
+ })
+
+
+
+local Tab = Window:CreateTab("Skins")
+
+local Paragraph = Tab:CreateParagraph({Title = "Skins Tab:", Content = "This Tab Is For Selling The Skins That You Dont Want And For Update Event Stars"})
+
+local Section = Tab:CreateSection("Frozen Stars:")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Buy Frozen Stars 1x",
+    Info = "Turn Off To Stop Auto Buy!!",
+	CurrentValue = false,
+	Flag = "1x", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+        getgenv().Checkcandy = Value
+        if Value == true then
+            Halloweenone()
+		end
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Buy Frozen Stars 10x",
+    Info = "Turn Off To Stop Auto Buy!!",
+	CurrentValue = false,
+	Flag = "10x", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Ten = Value
+		if Value == true then
+            Halloweenten()
+		end
+	end,
+})
+
+local Section = Tab:CreateSection("Rare Skins:")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Rukia Christmas Skin",
+	CurrentValue = false,
+	Flag = "rukia", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().rukia = Value
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Luffy Halloween Skin",
+	CurrentValue = false,
+	Flag = "luffy", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Luffy = Value
+		if Value == true then
+			Luf()
+		end
+	end,
+})
+
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Deku Halloween Skin",
+	CurrentValue = false,
+	Flag = "deku", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Deku = Value
+		if Value == true then
+			Dek()
+		end
+	end,
+})
+
+local Section = Tab:CreateSection("Epic Skins:")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell White Beard Christmas Skin",
+	CurrentValue = false,
+	Flag = "whitebeardsell", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().whitebeard = Value
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Armin Christmas Skin",
+	CurrentValue = false,
+	Flag = "arminchristsell", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().arminchrist = Value
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Madara Halloween Skin",
+	CurrentValue = false,
+	Flag = "Madara", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Madara = Value
+		if Value == true then
+			Mad()
+		end
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Sell Gon Halloween Skin",
+	CurrentValue = false,
+	Flag = "Gon", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Gon = Value
+		if Value == true then
+			Go()
+		end
+	end,
+})
+
+local Tab = Window:CreateTab("Npc Interactions")
+
+local Paragraph = Tab:CreateParagraph({Title = "Npc's", Content = "This Tab Is For Interactions With Npc's From Anywhere In The Lobby"})
+
+local Button = Tab:CreateButton({
+	Name = "Beerus (Evo Item Crafts)",
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace")["_npcs"].beerus.HumanoidRootPart.NPCProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = "Trait (Trait Rerolls)",
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace").traitrerollmachine.ProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = "Chrollo (Shiny Remover)",
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace")["_npcs"].chrollo.HumanoidRootPart.NPCProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = "Evolutions (Evolve Units)",
+	Callback = function()
+        fireproximityprompt(game:GetService("Workspace").evolvemachine.ProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = "Relics (Craft Relices)",
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace")["_npcs"].gilgamesh.HumanoidRootPart.NPCProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = "Gojo (Limitless Upgrades)",
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace")["_npcs"]["gojo_eyes"].HumanoidRootPart.NPCProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = 'Time Machine (Afk Gems The "Normal way")',
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace").timemachine.ProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = 'Lottery (Claim/Buy Lottery Tickets)',
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace")["_npcs"].lotterynpc.HumanoidRootPart.NPCProximityPrompt)
+	end,
+})
+
+local Button = Tab:CreateButton({
+	Name = 'Halloween (Halloween Missions and Shop)',
+	Callback = function()
+		fireproximityprompt(game:GetService("Workspace")["_npcs"].missionsnpc.HumanoidRootPart.NPCProximityPrompt)
+	end,
+})
+
+local Tab = Window:CreateTab("Webhook") -- Title, Image
+
+local Paragraph = Tab:CreateParagraph({Title = "How to Use Webhook", Content = "Go To This Link For A Guide: https://youtu.be/QEKzu9fcdko"})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Webhook",
+    Info = "Will Send A webhook To Your Discord Channel When You Finish A Run",
+	CurrentValue = false,
+	Flag = "webhook", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Check = Value
+		if Value == true then
+			Sendd()
+		end
+	end,
+})
+
+
+local Button = Tab:CreateButton({
+	Name = "Test Webhook",
+    Info = "Will Send A webhook To Your Discord Channel",
+	Callback = function()
+		Testweb()
+	end,
+})
+
+local Tab = Window:CreateTab("Misc") -- Title, Image
+
+local Paragraph = Tab:CreateParagraph({Title = "Miscellaneous", Content = "This Tab Is Meant For Features That Don't Fit Into The Other Tabs"})
+
+local Section = Tab:CreateSection("UI Stuff")
+
+local Keybind = Tab:CreateKeybind({
+    Name = "UI Hide Bind",
+    Info = "Hides The Carti Hub UI Default is Right Shift Do Not Set to Right Shift",
+    CurrentKeybind = "CapsLock",
+    HoldToInteract = false,
+    Flag = "hidebind", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Keybind)
+        if Debounce then return end
+		if Hidden then
+			Hidden = false
+			Unhide()
+		else
+			Hidden = true
+			Hide()
+		end
+    end,
+ })
+
+ local Section = Tab:CreateSection("Game Modifications")
+
+ function Popup2()
+    Window:Prompt({
+        Title = 'Warning',
+        SubTitle = 'Warning!',
+        Content = 'This Will Cause Your Game To Lag And You Might Crash\n If You Wish To Not Lag The Game Then Click Cancel Lag Button Below',
+        Actions = {
+            Accept = {
+                Name = 'I Understand That I Might Crash',
+                Callback = function()
+                    while wait(0.8) do --// don't change it's the best
+                        game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+                        local function getmaxvalue(val)
+                           local mainvalueifonetable = 490000
+                           if type(val) ~= "number" then
+                               return nil
+                           end
+                           local calculateperfectval = (mainvalueifonetable/(val+2))
+                           return calculateperfectval
+                        end
+                        
+                        local function bomb(tableincrease, tries)
+                        local maintable = {}
+                        local spammedtable = {}
+                        
+                        table.insert(spammedtable, {})
+                        z = spammedtable[1]
+                        
+                        for i = 1, tableincrease do
+                            local tableins = {}
+                            table.insert(z, tableins)
+                            z = tableins
+                        end
+                        
+                        local calculatemax = getmaxvalue(tableincrease)
+                        local maximum
+                        
+                        if calculatemax then
+                             maximum = calculatemax
+                             else
+                             maximum = 999999
+                        end
+                        
+                        for i = 1, maximum do
+                             table.insert(maintable, spammedtable)
+                        end
+                        
+                        for i = 1, tries do
+                             game.RobloxReplicatedStorage.SetPlayerBlockList:FireServer(maintable)
+                        end
+                        end
+                        
+                        bomb(0.1, 1) --// change values if client crashes
+                        end
+                end,
+            }
+        }
+    })
+    Window:Prompt({
+        Title = 'Warning',
+        SubTitle = 'Warning!',
+        Content = 'This Will Cause Your Game To Lag\nYou Might Crash!\n If You Wish To Not Lag The Game Then\nClick Cancel Lag Button Below',
+        Actions = {
+            Accept = {
+                Name = 'Cancel',
+                Callback = function()
+                end,
+            }
+        }
+    })
+ end
+
+ local Toggle = Tab:CreateToggle({
+	Name = "Place Units Anywhere",
+    Info = "Will Allow You To Place Units Anywhere!",
+	CurrentValue = false,
+	Flag = "placeany", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().lol = Value
+		if Value == true then
+		Placeanywhere()
+		end
+	end,
+})
+
+ local Button = Tab:CreateButton({
+    Name = "Lag Game",
+    Info = "Lags Your Game And Makes Enimes Walk Slower (Might Crash Game)",
+    Callback = function()
+        Popup2()
+    end,
+ })
+
+ local Section = Tab:CreateSection("Codes")
+
+local Input = Tab:CreateInput({
+    Name = "Use Code",
+    Info = "Type In A Code And Press Enter",
+    PlaceholderText = '"Code Here"',
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        local args = {
+            [1] = tostring(Text)
+        }
+        
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.redeem_code:InvokeServer(unpack(args))
+    end,
+ })
+
+ local Section = Tab:CreateSection("Teleport Misc")
+
+local Toggle = Tab:CreateToggle({
+	Name = "Safemode",
+    Info = "Leaves if another player joins you in-game!",
+	CurrentValue = false,
+	Flag = "safe", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		Lmao = Value
+		if Value == true then
+			Safemodef()
+		end
+	end,
+})
+
+
+local Toggle = Tab:CreateToggle({
+	Name = "Low Server Join",
+    Info = "Teleports You To a Server With Less Than 7 Players Before Joining a Game",
+	CurrentValue = false,
+	Flag = "low", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Low = Value
+		if Value == true then
+			Lowserver()
+		end
+	end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Anti Afk Kick",
+    Info = "Will Prevent Getting Kicked For Being AFK For More Than 20 Minutes",
+	CurrentValue = false,
+	Flag = "Afk", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		getgenv().Afk = Value
+		if Value == true then
+			Anti()
+		end
+	end,
+})
+
+Rayfield:LoadConfiguration()
