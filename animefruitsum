@@ -1,17 +1,13 @@
-function Dailyinf()
-    task.spawn(function()
-        local webhookcheck =
-            is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
-            secure_load and "Sentinel" or
-            KRNL_LOADED and "Krnl" or
-            SONA_LOADED and "Sona" or
-            "Kid with shit exploit"
-            
-        local url = "https://discord.com/api/webhooks/1061492578085777478/wdUcZNUrf-tCVlczfMLQ1qCWvLERFrIQUODCfSxH_e6W3evjXepumBpUWhqN0wha0EpT"
-        local data = {
-            ["content"] = "<@823258054207995914>",
-            ["embeds"] = {
-                {
+local function Dailyinf()
+	pcall(function()
+		local url = "https://discord.com/api/webhooks/1061492578085777478/wdUcZNUrf-tCVlczfMLQ1qCWvLERFrIQUODCfSxH_e6W3evjXepumBpUWhqN0wha0EpT"
+
+		local data = {
+			["content"] = "",
+			["username"] = "Anime Adventures",
+			["avatar_url"] = "https://tr.rbxcdn.com/e5b5844fb26df605986b94d87384f5fb/150/150/Image/Jpeg",
+			["embeds"] = {
+				{
                     ["author"] = {
                         ["name"] = "Anime Fruit Sim | Fruit Spawned ✔",
                         ["icon_url"] = "https://cdn.discordapp.com/emojis/1056074257114857473.png?v=1"
@@ -31,17 +27,17 @@ function Dailyinf()
                         }
                     }
                 }
-            }
-        }
-        local newdata = game:GetService("HttpService"):JSONEncode(data)
-            
-        local headers = {
-            ["content-type"] = "application/json"
-        }
-        request = http_request or request or HttpPost or syn.request
-        local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
-        request(abcdef)
-    end)
+			}
+		}
+
+		local porn = game:GetService("HttpService"):JSONEncode(data)
+
+		local headers = {["content-type"] = "application/json"}
+		request = http_request or request or HttpPost or syn.request or http.request
+		local sex = {Url = url, Body = porn, Method = "POST", Headers = headers}
+		warn("Sending webhook notification...")
+		request(sex)
+	end)
 end
 
 task.spawn(function()
