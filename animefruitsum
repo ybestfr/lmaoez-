@@ -1,0 +1,145 @@
+function Dailyinf()
+    task.spawn(function()
+        local webhookcheck =
+            is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
+            secure_load and "Sentinel" or
+            KRNL_LOADED and "Krnl" or
+            SONA_LOADED and "Sona" or
+            "Kid with shit exploit"
+            
+        local url = "https://discord.com/api/webhooks/1058014880474603662/mORMlMe0-KHmXFBr8muq-tsbVEpGgkyKgS_nKja9rjp1UuHN_s0eglkKRmSgr5QzN1Pp"
+        local data = {
+            ["content"] = "<@&1061495071058432023>",
+            ["embeds"] = {
+                {
+                    ["author"] = {
+                        ["name"] = "Anime Fruit Sim | Fruit Spawned ✔",
+                        ["icon_url"] = "https://cdn.discordapp.com/emojis/1056074257114857473.png?v=1"
+                    },
+                    ["description"] = "**Name:**\n||**"..game:GetService("Players").LocalPlayer.Name.."**||",
+                    ["color"] = 110335,
+
+                    ["thumbnail"] = {
+                        ['url'] = "https://www.roblox.com/headshot-thumbnail/image?userId=212171789&width=420&height=420&format=png"
+                    },
+
+                    ["fields"] = {
+                        {
+                            ["name"] = "**Fruit Spawned**",
+                            ["value"] = getgenv().fruit,
+                            ["inline"] = true
+                        }
+                    }
+                }
+            }
+        }
+        local newdata = game:GetService("HttpService"):JSONEncode(data)
+            
+        local headers = {
+            ["content-type"] = "application/json"
+        }
+        request = http_request or request or HttpPost or syn.request
+        local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+        request(abcdef)
+    end)
+end
+
+task.spawn(function()
+    while task.wait(3) do
+        for _, v in next, game:GetService("Workspace").FruitSpawns:GetChildren() do
+            for _, v in next, v:GetChildren() do
+                if tostring(v.Parent) == "Zushi" then
+                    if v.ClassName == 'MeshPart' then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                    end
+                    getgenv().fruit = "Zushi"
+                    Dailyinf()
+                    if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                    end
+                end
+                if tostring(v.Parent) == "Mochi" then
+                    if v.ClassName == 'MeshPart' then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                    end
+                    getgenv().fruit = "Mochi"
+                    Dailyinf()
+                    if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                    end
+                end
+                if tostring(v.Parent) == "Tori" then
+                    if v.ClassName == 'MeshPart' then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                    end
+                    getgenv().fruit = "Tori"
+                    Dailyinf()
+                    if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                    end
+                end
+                if tostring(v.Parent) == "Goro" then
+                    if v.ClassName == 'MeshPart' then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                    end
+                    getgenv().fruit = "Goro"
+                    Dailyinf()
+                    if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                    end
+                end
+                if tostring(v.Parent) == "Gura" then
+                    if v.ClassName == 'MeshPart' then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                    end
+                    getgenv().fruit = "Gura"
+                    Dailyinf()
+                    if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                    end
+                end
+                if tostring(v.Parent) == "Magu" then
+                    if v.ClassName == 'MeshPart' then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame 
+                    end
+                    getgenv().fruit = "Magu"
+                    Dailyinf()
+                    if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                    end
+                end
+                if tostring(v.Parent) == "Pika" then
+                    if v.ClassName == 'MeshPart' then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame 
+                    end
+                    getgenv().fruit = "Pika"
+                    Dailyinf()
+                    if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                    end
+                end
+            end
+        end
+    end
+end)
