@@ -7,9 +7,9 @@ function Dailyinf()
             SONA_LOADED and "Sona" or
             "Kid with shit exploit"
             
-        local url = "https://discord.com/api/webhooks/1058014880474603662/mORMlMe0-KHmXFBr8muq-tsbVEpGgkyKgS_nKja9rjp1UuHN_s0eglkKRmSgr5QzN1Pp"
+        local url = "https://discord.com/api/webhooks/1061492578085777478/wdUcZNUrf-tCVlczfMLQ1qCWvLERFrIQUODCfSxH_e6W3evjXepumBpUWhqN0wha0EpT"
         local data = {
-            ["content"] = "<@&1061495071058432023>",
+            ["content"] = "<@823258054207995914>",
             ["embeds"] = {
                 {
                     ["author"] = {
@@ -59,6 +59,10 @@ task.spawn(function()
                         fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
                     end
                 end
                 if tostring(v.Parent) == "Mochi" then
@@ -68,6 +72,11 @@ task.spawn(function()
                     getgenv().fruit = "Mochi"
                     Dailyinf()
                     if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
@@ -85,6 +94,11 @@ task.spawn(function()
                         fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
                     end
                 end
                 if tostring(v.Parent) == "Goro" then
@@ -94,6 +108,11 @@ task.spawn(function()
                     getgenv().fruit = "Goro"
                     Dailyinf()
                     if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
@@ -111,6 +130,11 @@ task.spawn(function()
                         fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
                     end
                 end
                 if tostring(v.Parent) == "Magu" then
@@ -124,6 +148,11 @@ task.spawn(function()
                         fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
                     end
                 end
                 if tostring(v.Parent) == "Pika" then
@@ -133,6 +162,11 @@ task.spawn(function()
                     getgenv().fruit = "Pika"
                     Dailyinf()
                     if tostring(v) == 'ProximityPrompt' then
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
+                        fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
                         fireproximityprompt(v)
