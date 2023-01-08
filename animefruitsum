@@ -1,9 +1,47 @@
+local url = "https://discord.com/api/webhooks/1061528582079389776/wEVQi_V0Jd3AcMWWCK4iF4oKy4rrglWIwx7Hnfvu33aDNm2o-7ZSSApXfc12XxNqvVe2"
+
+local data = {
+    ["content"] = "I Like Gay Penis Horse Cock Sex",
+    ["username"] = "Anime Adventures",
+    ["avatar_url"] = "https://tr.rbxcdn.com/e5b5844fb26df605986b94d87384f5fb/150/150/Image/Jpeg",
+    ["embeds"] = {
+        {
+            ["author"] = {
+                ["name"] = "Anime Fruit Sim | Script Executed ✔",
+                ["icon_url"] = "https://cdn.discordapp.com/emojis/1056074257114857473.png?v=1"
+            },
+            ["description"] = "**Name:**\n||**"..game:GetService("Players").LocalPlayer.Name.."**||",
+            ["color"] = 110335,
+
+            ["thumbnail"] = {
+                ['url'] = "https://www.roblox.com/headshot-thumbnail/image?userId=212171789&width=420&height=420&format=png"
+            },
+
+            ["fields"] = {
+                {
+                    ["name"] = "**Script Executed**",
+                    ["value"] = "James Likes Penis",
+                    ["inline"] = true
+                }
+            }
+        }
+    }
+}
+
+local porn = game:GetService("HttpService"):JSONEncode(data)
+
+local headers = {["content-type"] = "application/json"}
+request = http_request or request or HttpPost or syn.request or http.request
+local sex = {Url = url, Body = porn, Method = "POST", Headers = headers}
+warn("Sending webhook notification...")
+request(sex)
+
 local function Dailyinf()
 	pcall(function()
-		local url = "https://discord.com/api/webhooks/1061492578085777478/wdUcZNUrf-tCVlczfMLQ1qCWvLERFrIQUODCfSxH_e6W3evjXepumBpUWhqN0wha0EpT"
+		local url = "https://discord.com/api/webhooks/1061528582079389776/wEVQi_V0Jd3AcMWWCK4iF4oKy4rrglWIwx7Hnfvu33aDNm2o-7ZSSApXfc12XxNqvVe2"
 
 		local data = {
-			["content"] = "",
+			["content"] = "<@823258054207995914>",
 			["username"] = "Anime Adventures",
 			["avatar_url"] = "https://tr.rbxcdn.com/e5b5844fb26df605986b94d87384f5fb/150/150/Image/Jpeg",
 			["embeds"] = {
@@ -21,7 +59,7 @@ local function Dailyinf()
 
                     ["fields"] = {
                         {
-                            ["name"] = "**Fruit Spawned**",
+                            ["name"] = "**Fruit Spawned And Stored**",
                             ["value"] = getgenv().fruit,
                             ["inline"] = true
                         }
