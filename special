@@ -69,6 +69,13 @@ nGroupBox:AddToggle('friporjoinown', {
     Tooltip = 'Turn This On To Join Portals That Anyone Opens', -- Information shown when you hover over the toggle
 })
 
+nGroupBox:AddToggle('AutoIngot', {
+    Text = 'Auto Craft Ingots',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Turn This On To Auto Craft Ingots With Steel', -- Information shown when you hover over the toggle
+})
+
+
 Toggles.AutoRejointoggle:OnChanged(function()
     getgenv().autoleave = Toggles.AutoRejointoggle.Value
 end)
@@ -81,8 +88,10 @@ Toggles.friporjoinown:OnChanged(function()
     getgenv().autojoinporsnop = Toggles.friporjoinown.Value
 end)
 
--- This should print to the console: "My toggle state changed! New value: false"
-Toggles.AutoRejointoggle:SetValue(false)
+Toggles.AutoIngot:OnChanged(function()
+    getgenv().autoingot = Toggles.AutoIngot.Value
+end)
+
 
 
 LeftGroupBox:AddInput('MyTextbox', {
@@ -230,11 +239,35 @@ end)
 
 task.spawn(function()
     while task.wait() do
+        if getgenv().autoingot == true then
+            task.wait()
+            local args = {
+                [1] = "ingots_steel",
+                [2] = "craft_relics_ui"
+            }
+            
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.craft_item:InvokeServer(unpack(args))
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait() do
         if getgenv().autojoinporsnop == true then
             for _, v in next, game:WaitForChild("Workspace"):WaitForChild("_PORTALS"):WaitForChild("Lobbies"):GetChildren() do
                 if tostring(v.Owner.Value) ~= "nil" then 
                     game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(tostring(v))
                 end
+            end
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait() do
+        if game.PlaceId == 8304191830 then
+            if game.JobId ~= getgenv().jobid then 
+                game:GetService("TeleportService"):TeleportToPlaceInstance(8304191830, getgenv().jobid, LocalPlayer)
             end
         end
     end
