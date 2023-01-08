@@ -76,6 +76,7 @@ function sex()
     getgenv().difficulty = data.difficulty
     getgenv().world = data.world
     getgenv().level = data.level
+    getgenv().Serverhop = data.Serverhop
     --getgenv().door = data.door
 
     getgenv().SpawnUnitPos = data.xspawnUnitPos
@@ -107,6 +108,7 @@ end
             difficulty = getgenv().difficulty,
             world = getgenv().world,
             level = getgenv().level,
+            Serverhop = getgenv().Serverhop,
             --door = getgenv().door,
 
             xspawnUnitPos = getgenv().SpawnUnitPos,
@@ -144,6 +146,7 @@ end
             autofarmic = false,
             autostart = false,
             autoloadtp = true,
+            Serverhop = false,
             autoupgrade = false,
             difficulty = "nil",
             world = "nil",
@@ -2871,7 +2874,7 @@ local Toggle = Tab:CreateToggle({
 		if Value == true then
 
             Rayfield:Notify({
-                Title = "Success!",
+                Title ="Success!",
                 Content = "Auto Holiday Challenge Is Now On, Just Sit Back and Watch The Magic Happen :)",
                 Duration = 2,
             })
@@ -3015,6 +3018,73 @@ local Dropdown = Tab:CreateDropdown({
 	end,
 })
 
+function TeleportCheck()
+    Time = 1 -- seconds
+    repeat wait() until game:IsLoaded()
+    wait(Time)
+    local PlaceID = game.PlaceId
+    local AllIDs = {}
+    local foundAnything = ""
+    local actualHour = os.date("!*t").hour
+    local Deleted = false
+    function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Desc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Desc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+    end
+end
+ 
+function Teleport()
+   while wait() do
+       pcall(function()
+           TPReturner()
+           if foundAnything ~= "" then
+               TPReturner()
+           end
+       end)
+   end
+end
+
 local Slider1 = Tab:CreateSlider({
     Name = "Auto Server Hop Time",
     Info = "Will Server Hop After This Many Minutes", -- Speaks for itself, Remove if none.
@@ -3031,12 +3101,15 @@ local Slider1 = Tab:CreateSlider({
  local Toggle = Tab:CreateToggle({
 	Name = "Auto Server Hop",
     Info = "Will Server Hop After The Amt Of Minutes That You Selected Have Passed",
-	CurrentValue = false,
-	Flag = "portalstartserverhop", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "serverhopportog",
+	CurrentValue = getgenv().Serverhop,
 	Callback = function(Value)
-        task.wait(tonumber(getgenv().numberserverhop) * 60)
-		if game.PlaceId == 8304191830 then
-            game:GetService("TeleportService"):Teleport(8304191830, LocalPlayer)
+        if Value == true then 
+            task.wait(tonumber(getgenv().numberserverhop * 60))
+            if game.PlaceId == 8304191830 then
+                TeleportCheck()
+                Teleport()
+            end
         end
 	end,
 })
