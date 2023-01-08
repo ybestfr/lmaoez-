@@ -69,12 +69,6 @@ nGroupBox:AddToggle('friporjoinown', {
     Tooltip = 'Turn This On To Join Portals That Anyone Opens', -- Information shown when you hover over the toggle
 })
 
-nGroupBox:AddToggle('AutoIngot', {
-    Text = 'Auto Craft Ingots',
-    Default = true, -- Default value (true / false)
-    Tooltip = 'Turn This On To Auto Craft Ingots With Steel', -- Information shown when you hover over the toggle
-})
-
 
 Toggles.AutoRejointoggle:OnChanged(function()
     getgenv().autoleave = Toggles.AutoRejointoggle.Value
@@ -87,12 +81,6 @@ end)
 Toggles.friporjoinown:OnChanged(function()
     getgenv().autojoinporsnop = Toggles.friporjoinown.Value
 end)
-
-Toggles.AutoIngot:OnChanged(function()
-    getgenv().autoingot = Toggles.AutoIngot.Value
-end)
-
-
 
 LeftGroupBox:AddInput('MyTextbox', {
     Default = '',
