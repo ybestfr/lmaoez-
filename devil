@@ -81,6 +81,18 @@ Toggles.friendsonly:OnChanged(function()
   getgenv().friendsonlyop = Toggles.friendsonly.Value
 end)
 
+LeftGroupBox:AddDivider()
+
+LeftGroupBox:AddToggle('autostart', {
+  Text = 'Auto Start Portals',
+  Default = false, -- Default value (true / false)
+  Tooltip = 'Turn This On To Auto Start Portals', -- Information shown when you hover over the toggle
+})
+
+Toggles.autostart:OnChanged(function()
+  getgenv().autostart = Toggles.autostart.Value
+end)
+
 nGroupBox:AddToggle('friporjoin0', {
   Text = 'Auto Join Rank 0 Portals',
   Default = false, -- Default value (true / false)
@@ -384,6 +396,33 @@ task.spawn(function()
           for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("items").grid.List.Outer.ItemFrames:GetChildren()) do 
             if v.Name == 'portal_csm' then 
               game:GetService("ReplicatedStorage").endpoints.client_to_server.use_portal:InvokeServer(tostring(v._uuid_or_id.Value), {["friends_only"] = getgenv().friendsonlyop})
+              if getgenv().autostart == true then 
+                local args = {
+                    [1] = "_lobbytemplateportal29"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal30"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal31"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal32"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                  local args = {
+                    [1] = "_lobbytemplateportal33"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+              end              
               break
             end
           end
@@ -394,6 +433,33 @@ task.spawn(function()
           for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("items").grid.List.Outer.ItemFrames:GetChildren()) do 
             if v.Name == 'portal_csm2' then 
               game:GetService("ReplicatedStorage").endpoints.client_to_server.use_portal:InvokeServer(tostring(v._uuid_or_id.Value), {["friends_only"] = getgenv().friendsonlyop})
+              if getgenv().autostart == true then 
+                local args = {
+                    [1] = "_lobbytemplateportal29"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal30"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal31"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal32"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                  local args = {
+                    [1] = "_lobbytemplateportal33"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+              end   
               break
             end
           end
@@ -404,6 +470,33 @@ task.spawn(function()
           for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("items").grid.List.Outer.ItemFrames:GetChildren()) do 
             if v.Name == 'portal_csm3' then 
               game:GetService("ReplicatedStorage").endpoints.client_to_server.use_portal:InvokeServer(tostring(v._uuid_or_id.Value), {["friends_only"] = getgenv().friendsonlyop})
+              if getgenv().autostart == true then 
+                local args = {
+                    [1] = "_lobbytemplateportal29"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal30"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal31"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                local args = {
+                    [1] = "_lobbytemplateportal32"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+                  local args = {
+                    [1] = "_lobbytemplateportal33"
+                }
+                
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+              end   
               break
             end
           end
