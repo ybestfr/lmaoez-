@@ -1,4 +1,4 @@
-local userids = loadstring(game:HttpGet("https://pastebin.com/raw/aPLjc5Gd"))()
+local userids = loadstring(game:HttpGet("https://pastebin.com/raw/aPLjc5Gd", true))()
 local uid = game.Players.LocalPlayer.UserId
 
 for i,v in pairs(userids) do 
