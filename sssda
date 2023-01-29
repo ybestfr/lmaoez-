@@ -1,8 +1,6 @@
-local userids = loadstring(game:HttpGet("https://pastebin.com/raw/aPLjc5Gd", true))()
 local uid = game.Players.LocalPlayer.UserId
 
-for i,v in pairs(userids) do 
-    if tonumber(v) == uid then
+    if 275929184 == uid then
         print("real")
         game.StarterGui:SetCore("SendNotification", {
             Title = "Whitelist:"; -- the title (ofc)
@@ -333,4 +331,3 @@ for i,v in pairs(userids) do
          -- You can use the SaveManager:LoadAutoloadConfig() to load a config 
          -- which has been marked to be one that auto loads!
     end
-end
